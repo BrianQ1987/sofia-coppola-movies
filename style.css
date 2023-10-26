@@ -1,0 +1,40 @@
+.poster {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.poster img:hover {
+    filter: opacity(30%);
+    
+}
+
+.poster-title {
+    position: absolute;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.info {
+    display: none;
+    flex-direction: column;
+}
+
+h2 {
+    width: 100%;
+}
+
+
+#back-btn {
+    color: #343a40;
+    background-color: #ffffff !important;
+    width: 80px;
+    font-size: 14pt;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+}
