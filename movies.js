@@ -694,4 +694,5 @@ let movies = {
         plex: true,
         watched: [],
         added: 2023
+    }
 }
