@@ -121,13 +121,20 @@ async function getMovies() {
         tmdb_pie = document.createElement("div");
         tmdb_pie.classList.add("pie");
         tmdb_pie.classList.add("pie1");
-        tmdb_pie.style.backgroundColor = colours[Math.round(score / 100 * 4)];;
+        
+        if (score < 50) {
+            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(score / 100 * 4)] + '; transform: rotate(' + (score / 100 * 360) + 'deg);"></div>';
+            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(score / 100 * 4)] + ';"></div>';
+        } else {
+            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(score / 100 * 4)] + '; transform: rotate(' + (score / 100 * 360) + 'deg);"></div>';
+            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(score / 100 * 4)] + ';"></div>';
+        }
 
         tmdb_pie.innerHTML = '<div class="outer-right mask">' +
-                            '<div class="inner-right"></div>' +
+                            inner_right +
                             '</div>' +
                             '<div class="outer-left mask">' +
-                            '<div class="inner-left"></div>' +
+                            inner_left +
                             '</div>' +
                             '<div class="content">' +
                             '<span>' + score + '%</span>' +
@@ -140,13 +147,21 @@ async function getMovies() {
             imdb_pie = document.createElement("div");
             imdb_pie.classList.add("pie");
             imdb_pie.classList.add("pie1");
-            imdb_pie.style.backgroundColor = colours[Math.round(imdb_score.slice(0, imdb_score.indexOf("/")) / 10 * 4)];
+            imdb_num = imdb_score.slice(0, imdb_score.indexOf("/"))
+
+            if (imdb_num < 5) {
+                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
+                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
+            } else {
+                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
+                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
+            }
 
             imdb_pie.innerHTML = '<div class="outer-right mask">' +
-                                 '<div class="inner-right"></div>' +
+                                 inner_right +
                                  '</div>' +
                                  '<div class="outer-left mask">' +
-                                 '<div class="inner-left"></div>' +
+                                 inner_left +
                                  '</div>' +
                                  '<div class="content">' +
                                  '<span style = "font-size: 30px">' + imdb_score + '</span>' +
@@ -161,13 +176,21 @@ async function getMovies() {
             rt_pie = document.createElement("div");
             rt_pie.classList.add("pie");
             rt_pie.classList.add("pie1");
-            rt_pie.style.backgroundColor = colours[Math.round(rt_score.slice(0, rt_score.indexOf("%")) / 100 * 4)];
+            rt_num = rt_score.slice(0, rt_score.indexOf("%"));
+
+            if (rt_num < 50) {
+                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
+                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
+            } else {
+                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
+                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
+            }
     
             rt_pie.innerHTML =  '<div class="outer-right mask">' +
-                                '<div class="inner-right"></div>' +
+                                inner_right +
                                 '</div>' +
                                 '<div class="outer-left mask">' +
-                                '<div class="inner-left"></div>' +
+                                inner_left +
                                 '</div>' +
                                 '<div class="content">' +
                                 '<span>' + rt_score + '</span>' +
