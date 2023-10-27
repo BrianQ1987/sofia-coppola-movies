@@ -107,33 +107,119 @@ async function getMovies() {
         score = Math.round(data.vote_average * 10);
         
         colours = ["#DE3700", "#F85B00", "#E1FF00", "#92E000", "#2AA10F"];
+
+        ratings_div = document.createElement("div");
         
         try {
-            const response_i = await fetch("https://www.omdbapi.com/?i=" + data.imdb_id + "&apikey=ba1f4581")
+            const response_i = await fetch("https://www.omdbapi.com/?i=" + data.imdb_id + "&apikey=f10fad26")
             const responseData_i = await response_i.json();
             ratings = responseData_i;
             ratings = ratings.Ratings;
+
+            imdb_score = null;
+            rt_score = null;
+            meta_score = null;
+            for (let i = 0; i < ratings.length; i ++) {
+                if (ratings[i].Source == "Internet Movie Database") {
+                    imdb_score = ratings[i].Value;
+                }
+
+                if (ratings[i].Source == "Rotten Tomatoes") {
+                    rt_score = ratings[i].Value;
+                }
+
+                if (ratings[i].Source == "Metacritic") {
+                    meta_score = ratings[i].Value;
+                }
+            }
+
+            if (imdb_score != null) {
+                imdb_pie = document.createElement("div");
+                imdb_pie.classList.add("pie");
+                imdb_pie.classList.add("pie1");
+                imdb_num = imdb_score.slice(0, imdb_score.indexOf("/"))
+    
+                if (imdb_num < 5) {
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
+                } else {
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
+                }
+    
+                imdb_pie.innerHTML = '<div class="outer-right mask">' +
+                                     inner_right +
+                                     '</div>' +
+                                     '<div class="outer-left mask">' +
+                                     inner_left +
+                                     '</div>' +
+                                     '<div class="content">' +
+                                     '<span style = "font-size: 30px">' + imdb_score + '</span>' +
+                                     '</div>' +
+                                     '<div class="title">IMDb</div>';
+    
+                ratings_div.appendChild(imdb_pie);
+            }
+    
+            
+            if (rt_score != null) {
+                rt_pie = document.createElement("div");
+                rt_pie.classList.add("pie");
+                rt_pie.classList.add("pie1");
+                rt_num = rt_score.slice(0, rt_score.indexOf("%"));
+    
+                if (rt_num < 50) {
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
+                } else {
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
+                }
+        
+                rt_pie.innerHTML =  '<div class="outer-right mask">' +
+                                    inner_right +
+                                    '</div>' +
+                                    '<div class="outer-left mask">' +
+                                    inner_left +
+                                    '</div>' +
+                                    '<div class="content">' +
+                                    '<span>' + rt_score + '</span>' +
+                                    '</div>' +
+                                    '<div class="title">Rotten Tomatoes</div>';
+        
+                ratings_div.appendChild(rt_pie);
+            }
+    
+            if (meta_score != null) {
+                meta_pie = document.createElement("div");
+                meta_pie.classList.add("pie");
+                meta_pie.classList.add("pie1");
+                meta_num = meta_score.slice(0, meta_score.indexOf("/"))
+            
+                if (meta_num < 50) {
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
+                } else {
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
+                }
+            
+                meta_pie.innerHTML = '<div class="outer-right mask">' +
+                                     inner_right +
+                                     '</div>' +
+                                     '<div class="outer-left mask">' +
+                                     inner_left +
+                                     '</div>' +
+                                     '<div class="content">' +
+                                     meta_num + '%' +
+                                     '</div>' +
+                                     '<div class="title">Metacritic</div>';
+            
+                ratings_div.appendChild(meta_pie);
+            }
+
         } catch (error) {
 
-        }        
-
-        ratings_div = document.createElement("div");
-
-        imdb_score = null;
-        rt_score = null;
-        meta_score = null;
-        for (let i = 0; i < ratings.length; i ++) {
-             if (ratings[i].Source == "Internet Movie Database") {
-                imdb_score = ratings[i].Value;
-             }
-
-             if (ratings[i].Source == "Rotten Tomatoes") {
-                rt_score = ratings[i].Value;
-             }
-
-             if (ratings[i].Source == "Metacritic") {
-                meta_score = ratings[i].Value;
-             }
         }
 
         tmdb_pie = document.createElement("div");
@@ -161,90 +247,7 @@ async function getMovies() {
 
         
 
-        if (imdb_score != null) {
-            imdb_pie = document.createElement("div");
-            imdb_pie.classList.add("pie");
-            imdb_pie.classList.add("pie1");
-            imdb_num = imdb_score.slice(0, imdb_score.indexOf("/"))
-
-            if (imdb_num < 5) {
-                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
-                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
-            } else {
-                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
-                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
-            }
-
-            imdb_pie.innerHTML = '<div class="outer-right mask">' +
-                                 inner_right +
-                                 '</div>' +
-                                 '<div class="outer-left mask">' +
-                                 inner_left +
-                                 '</div>' +
-                                 '<div class="content">' +
-                                 '<span style = "font-size: 30px">' + imdb_score + '</span>' +
-                                 '</div>' +
-                                 '<div class="title">IMDb</div>';
-
-            ratings_div.appendChild(imdb_pie);
-        }
-
         
-        if (rt_score != null) {
-            rt_pie = document.createElement("div");
-            rt_pie.classList.add("pie");
-            rt_pie.classList.add("pie1");
-            rt_num = rt_score.slice(0, rt_score.indexOf("%"));
-
-            if (rt_num < 50) {
-                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
-                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
-            } else {
-                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
-                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
-            }
-    
-            rt_pie.innerHTML =  '<div class="outer-right mask">' +
-                                inner_right +
-                                '</div>' +
-                                '<div class="outer-left mask">' +
-                                inner_left +
-                                '</div>' +
-                                '<div class="content">' +
-                                '<span>' + rt_score + '</span>' +
-                                '</div>' +
-                                '<div class="title">Rotten Tomatoes</div>';
-    
-            ratings_div.appendChild(rt_pie);
-        }
-
-        if (meta_score != null) {
-            meta_pie = document.createElement("div");
-            meta_pie.classList.add("pie");
-            meta_pie.classList.add("pie1");
-            meta_num = meta_score.slice(0, meta_score.indexOf("/"))
-        
-            if (meta_num < 50) {
-                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
-                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
-            } else {
-                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
-                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
-            }
-        
-            meta_pie.innerHTML = '<div class="outer-right mask">' +
-                                 inner_right +
-                                 '</div>' +
-                                 '<div class="outer-left mask">' +
-                                 inner_left +
-                                 '</div>' +
-                                 '<div class="content">' +
-                                 '<span style = "font-size: 30px">' + meta_score + '</span>' +
-                                 '</div>' +
-                                 '<div class="title">Metacritic</div>';
-        
-            ratings_div.appendChild(meta_pie);
-        }
         
         ratings_div.appendChild(tmdb_pie);
 

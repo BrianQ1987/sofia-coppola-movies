@@ -694,5 +694,11 @@ let movies = {
         plex: true,
         watched: [],
         added: 2023
+    },
+    "Red One": {
+        id: 845781,
+        plex: false,
+        watched: [],
+        added: 2023
     }
 }
