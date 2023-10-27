@@ -4,6 +4,19 @@ async function getMovies() {
 
     movies = sortObject(movies);
 
+    let year_added = [];
+    let current_year = 2020;
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+
+        let movie = movies[Object.keys(movies)[i]];
+
+        year_added.push(movie.added);
+
+    }
+
+    current_year = Math.max(...year_added);
+
     for (let i = 0; i < Object.keys(movies).length; i ++) {
 
         let movie = movies[Object.keys(movies)[i]];
@@ -106,8 +119,11 @@ async function getMovies() {
 
         ratings_div = document.createElement("div");
 
+        console.log(ratings)
+
         imdb_score = null;
         rt_score = null;
+        meta_score = null;
         for (let i = 0; i < ratings.length; i ++) {
              if (ratings[i].Source == "Internet Movie Database") {
                 imdb_score = ratings[i].Value;
@@ -115,6 +131,10 @@ async function getMovies() {
 
              if (ratings[i].Source == "Rotten Tomatoes") {
                 rt_score = ratings[i].Value;
+             }
+
+             if (ratings[i].Source == "Metacritic") {
+                meta_score = ratings[i].Value;
              }
         }
 
@@ -199,6 +219,34 @@ async function getMovies() {
     
             ratings_div.appendChild(rt_pie);
         }
+
+        if (meta_score != null) {
+            meta_pie = document.createElement("div");
+            meta_pie.classList.add("pie");
+            meta_pie.classList.add("pie1");
+            meta_num = meta_score.slice(0, meta_score.indexOf("/"))
+        
+            if (meta_num < 50) {
+                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
+                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
+            } else {
+                inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
+                inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
+            }
+        
+            meta_pie.innerHTML = '<div class="outer-right mask">' +
+                                 inner_right +
+                                 '</div>' +
+                                 '<div class="outer-left mask">' +
+                                 inner_left +
+                                 '</div>' +
+                                 '<div class="content">' +
+                                 '<span style = "font-size: 30px">' + meta_score + '</span>' +
+                                 '</div>' +
+                                 '<div class="title">Metacritic</div>';
+        
+            ratings_div.appendChild(meta_pie);
+        }
         
         ratings_div.appendChild(tmdb_pie);
 
@@ -206,6 +254,34 @@ async function getMovies() {
                                 "<div>Ratings:</div>";
 
         info_facts.appendChild(ratings_div);
+
+        added_div = document.createElement("div");
+        added_div.classList.add("row");
+        added_div.style.marginTop = "10px";
+        added_div.innerHTML = "<div>Added: <span class = 'added-year'>" + movie.added + "</span></div>";
+        if (movie.added == current_year) {
+            added_div.innerHTML += "<div class = 'new-entry'>New</div>"
+        }
+
+        info_facts.appendChild(added_div);
+
+        watched_div = document.createElement("div");
+        watched_div.style.marginLeft = "-15px";
+        watched_div.style.marginTop = "15px";
+
+        watched_div.innerHTML = "<div>Watched:</div>";
+
+        for (let i = movie.added; i <= current_year; i ++) {
+            if (movie.watched.includes(i)) {
+                emoji = "🎄"
+            } else {
+                emoji = "❌"
+            }
+            watched_div.innerHTML += "<div class = 'row' style = 'margin-left: 15px; font-size: 16pt'>" + i + ": " + emoji + "</div>"
+        }
+
+        info_facts.appendChild(watched_div);
+
 
         info_row.appendChild(info_facts);
 
@@ -225,7 +301,7 @@ async function getMovies() {
 
             services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus"];
 
-            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 50px;'>Watch it on:</div>"
+            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 25px;'>Watch it on:</div>"
 
             for (let i = 0; i < Object.keys(providers).length; i ++) {
                 service = providers[Object.keys(providers)[i]].provider_name;   

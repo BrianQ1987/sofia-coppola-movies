@@ -165,3 +165,18 @@ h2 {
     text-align: center;
     z-index: 2;
   }
+
+  .new-entry {
+    background-color: #2AA10F;
+    margin-left: 10px;
+    width: 80px;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 16pt;
+    padding-bottom: 1px;
+  }
+
+  .added-year {
+    font-size: 16pt;
+    margin-left: 5px;
+  }
