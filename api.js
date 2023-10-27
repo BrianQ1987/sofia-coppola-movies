@@ -1,124 +1,132 @@
 const moviesDiv = document.getElementById("movies");
 
-async function getMovie(movie) {
+async function getMovies() {
 
-    let id = movie.id;
-    let plex = movie.plex;
+    movies = sortObject(movies);
 
-    let data = []
-    try {
-        const response = await fetch(`${config.api_base_url}movie/${id}?api_key=${config.api_key}`)
-        const responseData = await response.json();
-        data = responseData;
-    } catch (error) {
-        
-    }    
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
 
-    let poster_div = document.createElement("div");
-    poster_div.classList.add("col-4");
-    poster_div.classList.add("col-lg-3");
-    poster_div.classList.add("col-xl-2");
-    poster_div.classList.add("p-1");
-    poster_div.classList.add("poster")
-    poster_div.id = id;
-    poster_div.innerHTML = `<img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img>`;
-
-    moviesDiv.appendChild(poster_div);
-
-    title_div = document.createElement("div");
-    title_div.classList.add("poster-title");
-    title_div.id = id + "-title";
-    title_div.innerHTML = data.title;
-    title_div.style.display = "none";
-    poster_div.appendChild(title_div);
-
-    poster_div.onmouseover = function() {
-        document.getElementById(id + "-title").style.display = "flex";
-    }
-
-    poster_div.onmouseout = function() {
-        document.getElementById(id + "-title").style.display = "none";
-    }
-
+        let movie = movies[Object.keys(movies)[i]];
     
+        let id = movie.id;
+        let plex = movie.plex;
 
-    title_div.onmouseover = function () {
-        document.getElementById(id).getElementsByTagName("img")[0].style.filter = "opacity(30%)";
-    }
+        let data = []
+        try {
+            const response = await fetch(`${config.api_base_url}movie/${id}?api_key=${config.api_key}`)
+            const responseData = await response.json();
+            data = responseData;
+        } catch (error) {
+            
+        }    
 
-    title_div.onmouseout = function () {
-        document.getElementById(id).getElementsByTagName("img")[0].removeAttribute("style");
-    }
+        let poster_div = document.createElement("div");
+        poster_div.classList.add("col-4");
+        poster_div.classList.add("col-lg-3");
+        poster_div.classList.add("col-xl-2");
+        poster_div.classList.add("p-1");
+        poster_div.classList.add("poster")
+        poster_div.id = id;
+        poster_div.innerHTML = `<img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img>`;
 
-    info_div = document.createElement("div");
-    info_div.id = `${id}-info`;
-    info_div.classList.add("info");
+        moviesDiv.appendChild(poster_div);
 
-    info_title = document.createElement("h2");
-    info_title.textContent = data.title +  " (" + data.release_date.slice(0, 4) + ")";
+        title_div = document.createElement("div");
+        title_div.classList.add("poster-title");
+        title_div.id = id + "-title";
+        title_div.innerHTML = data.title;
+        title_div.style.display = "none";
+        poster_div.appendChild(title_div);
 
-    info_div.appendChild(info_title);
-
-    info_row = document.createElement("div");
-    info_row.classList.add("row");
-
-    info_div.appendChild(info_row);
-
-    info_poster = document.createElement("div");
-    info_poster.classList.add("info-poster");
-    info_poster.classList.add("col-5");
-
-    info_poster.innerHTML = `<img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img>`
-
-    info_row.appendChild(info_poster);
-
-    info_facts = document.createElement("div");
-    info_facts.classList.add("info-facts");
-    info_facts.classList.add("col-7");
-
-    duration = Math.floor(data.runtime / 60) + "h " + data.runtime % 60 + "m";
-    score = Math.round(data.vote_average * 10) + "%";       
-
-    info_facts.innerHTML = "<div>" + data.overview + "</div>" +
-        "<div>" + duration + "</div>" +
-        "<div>" + score +  "</div>"
-
-    info_row.appendChild(info_facts);
-
-    document.getElementById("movie-info").appendChild(info_div);
-
-    poster_div.onclick = function() {
-        moviesDiv.style.display = "none";
-        document.getElementById(`${id}-info`).style.display = "flex";
-    }
-
-    
-    try {
-        const response2 = await fetch(`${config.api_base_url}movie/${id}/watch/providers?api_key=${config.api_key}`)
-        const responseData2 = await response2.json();
-        providers = responseData2;
-        providers = providers.results.GB.flatrate;
-
-        services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus"]
-
-        for (let i = 0; i < Object.keys(providers).length; i ++) {
-            service = providers[Object.keys(providers)[i]].provider_name;            
-
-            if (services.includes(service)) {
-                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div>" + service + "</div>"
-            }
-
+        poster_div.onmouseover = function() {
+            document.getElementById(id + "-title").style.display = "flex";
         }
+
+        poster_div.onmouseout = function() {
+            document.getElementById(id + "-title").style.display = "none";
+        }
+
         
 
-    } catch (error) {
+        title_div.onmouseover = function () {
+            document.getElementById(id).getElementsByTagName("img")[0].style.filter = "opacity(30%)";
+        }
+
+        title_div.onmouseout = function () {
+            document.getElementById(id).getElementsByTagName("img")[0].removeAttribute("style");
+        }
+
+        info_div = document.createElement("div");
+        info_div.id = `${id}-info`;
+        info_div.classList.add("info");
+
+        info_title = document.createElement("h2");
+        info_title.textContent = data.title +  " (" + data.release_date.slice(0, 4) + ")";
+
+        info_div.appendChild(info_title);
+
+        info_row = document.createElement("div");
+        info_row.classList.add("row");
+
+        info_div.appendChild(info_row);
+
+        info_poster = document.createElement("div");
+        info_poster.classList.add("info-poster");
+        info_poster.classList.add("col-5");
+
+        info_poster.innerHTML = `<img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img>`
+
+        info_row.appendChild(info_poster);
+
+        info_facts = document.createElement("div");
+        info_facts.classList.add("info-facts");
+        info_facts.classList.add("col-7");
+
+        duration = Math.floor(data.runtime / 60) + "h " + data.runtime % 60 + "m";
+        score = Math.round(data.vote_average * 10) + "%";       
+
+        info_facts.innerHTML = "<div>" + data.overview + "</div>" +
+            "<div>" + duration + "</div>" +
+            "<div>" + score +  "</div>"
+
+        info_row.appendChild(info_facts);
+
+        document.getElementById("movie-info").appendChild(info_div);
+
+        poster_div.onclick = function() {
+            moviesDiv.style.display = "none";
+            document.getElementById(`${id}-info`).style.display = "flex";
+        }
+
         
+        try {
+            const response2 = await fetch(`${config.api_base_url}movie/${id}/watch/providers?api_key=${config.api_key}`)
+            const responseData2 = await response2.json();
+            providers = responseData2;
+            providers = providers.results.GB.flatrate;
+
+            services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus"]
+
+            for (let i = 0; i < Object.keys(providers).length; i ++) {
+                service = providers[Object.keys(providers)[i]].provider_name;            
+
+                if (services.includes(service)) {
+                    document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div>" + service + "</div>"
+                }
+
+            }
+            
+
+        } catch (error) {
+            
+        }
+
+        if (plex == true) {
+            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div>Plex</div>"
+        } 
+
     }
 
-    if (plex == true) {
-        document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div>Plex</div>"
-    } 
-      
 }
 
 function sortObject(o) {
@@ -154,10 +162,8 @@ function sortObject(o) {
     return sorted;
  }
 
-movies = sortObject(movies);
-
-for (let i = 0; i < Object.keys(movies).length; i ++) {
-    getMovie(movies[Object.keys(movies)[i]]);
+window.onload = function() {
+    getMovies();
 }
 
 back_btn = document.getElementById("back-btn");

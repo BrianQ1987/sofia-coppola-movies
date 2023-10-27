@@ -11,7 +11,7 @@ let movies = {
         id: 13187,
         plex: false
     },
-    "A Christmas Carol (1951)": {
+    "Scrooge (1951)": {
         id: 13188,
         plex: true
     },
