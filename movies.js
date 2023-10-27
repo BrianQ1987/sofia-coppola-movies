@@ -688,5 +688,10 @@ let movies = {
         plex: true,
         watched: [2021],
         added: 2021
-    }            
+    },
+    "Fanny and Alexander": {
+        id: 5961,
+        plex: true,
+        watched: [],
+        added: 2023
 }
