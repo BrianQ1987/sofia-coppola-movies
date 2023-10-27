@@ -119,8 +119,6 @@ async function getMovies() {
 
         ratings_div = document.createElement("div");
 
-        console.log(ratings)
-
         imdb_score = null;
         rt_score = null;
         meta_score = null;
