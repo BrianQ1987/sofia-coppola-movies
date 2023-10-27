@@ -700,5 +700,11 @@ let movies = {
         plex: false,
         watched: [],
         added: 2023
+    },
+    "The Holdovers": {
+        id: 840430,
+        plex: false,
+        watched: [],
+        added: 2023
     }
 }
