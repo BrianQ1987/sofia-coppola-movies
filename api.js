@@ -265,7 +265,7 @@ async function getMovies() {
         info_facts.appendChild(added_div);
 
         watched_div = document.createElement("div");
-        watched_div.style.marginLeft = "-15px";
+        //watched_div.style.marginLeft = "-15px";
         watched_div.style.marginTop = "15px";
 
         watched_div.innerHTML = "<div>Watched:</div>";
