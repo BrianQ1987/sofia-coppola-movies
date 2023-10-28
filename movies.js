@@ -706,5 +706,11 @@ let movies = {
         plex: false,
         watched: [],
         added: 2023
+    },
+    "Tokyo Godfathers": {
+        id: 13398,
+        plex: true,
+        watched: [2022],
+        added: 2022
     }
 }
