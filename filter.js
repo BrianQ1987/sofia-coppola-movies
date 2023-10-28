@@ -153,7 +153,7 @@ filter_added.onmouseover = function() {
         
             }
 
-            showing.innerHTML = "Displaying movies first added in <strong>"+ i + "</strong> (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies";
+            showing.innerHTML = "Displaying movies first added in <strong>"+ i + "</strong> (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies)";
 
             filter_menu.style.display = "none";
             filter_btn.classList.remove("clicked");
