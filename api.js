@@ -1,21 +1,22 @@
 const moviesDiv = document.getElementById("movies");
+buttons = document.getElementById("buttons");
+showing = document.getElementById("showing");
+
+let year_added = [];
+    let current_year = 2020;
+for (let i = 0; i < Object.keys(movies).length; i ++) {
+
+    let movie = movies[Object.keys(movies)[i]];
+
+    year_added.push(movie.added);
+
+}
+
+current_year = Math.max(...year_added);
 
 async function getMovies() {
 
     movies = sortObject(movies);
-
-    let year_added = [];
-    let current_year = 2020;
-
-    for (let i = 0; i < Object.keys(movies).length; i ++) {
-
-        let movie = movies[Object.keys(movies)[i]];
-
-        year_added.push(movie.added);
-
-    }
-
-    current_year = Math.max(...year_added);
 
     for (let i = 0; i < Object.keys(movies).length; i ++) {
 
@@ -243,10 +244,7 @@ async function getMovies() {
                             '<div class="content">' +
                             '<span>' + score + '%</span>' +
                             '</div>' +
-                            '<div class="title">TMDB</div>';
-
-        
-
+                            '<div class="title">TMDB</div>';      
         
         
         ratings_div.appendChild(tmdb_pie);
@@ -291,6 +289,7 @@ async function getMovies() {
         poster_div.onclick = function() {
             moviesDiv.style.display = "none";
             back_btn.style.display = "block";
+            buttons.style.display = "none";
             document.getElementById(`${id}-info`).style.display = "flex";
         }
         
@@ -321,7 +320,7 @@ async function getMovies() {
         }
 
         if (plex == true) {
-            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'plex.svg'>Plex</div>"
+            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'img/plex.svg'>Plex</div>"
         }
 
         overview = document.createElement("div");
@@ -330,7 +329,9 @@ async function getMovies() {
         info_div.appendChild(overview);
 
         
-
+        if (i == Object.keys(movies).length - 1) {
+            showing.innerHTML = "Displaying <strong>" + Object.keys(movies).length + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies"
+        }
 
 
     }
@@ -386,6 +387,7 @@ back_btn.onclick = function() {
     }
 
     back_btn.style.display = "none";
+    buttons.style.display = "flex"
 
 }
 

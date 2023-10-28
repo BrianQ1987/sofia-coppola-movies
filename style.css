@@ -180,3 +180,52 @@ h2 {
     font-size: 16pt;
     margin-left: 5px;
   }
+
+  #filter-btn, #sort-btn {
+    width: 120px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 15px;
+    border: solid 1px #ffffff;
+    font-size: 14pt;
+  }
+
+  .clicked {
+    color: #343a40;
+    background-color: #ffffff !important;
+  }
+
+  #filter-menu, #sort-menu {
+    display: none;
+  }
+
+  .menu-item {
+    border: solid 1px #333333;
+    cursor: pointer;
+    font-size: 14pt;
+    width: 220px;
+    padding: 5px;
+  }
+
+  .menu-item:hover {
+    background-color: #333333;
+  }
+
+  #sort-menu {
+    margin-left: 135px;
+  }
+
+  #showing {
+    margin-left: 15px;
+  }
+
+  #added-filters {
+    margin-left: 220px;
+    margin-top: -120px;
+  }
+
+  #watched-filters {
+    margin-left: 220px;
+    margin-top: -80px;
+  }
