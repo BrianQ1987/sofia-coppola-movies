@@ -1,6 +1,7 @@
 const moviesDiv = document.getElementById("movies");
 buttons = document.getElementById("buttons");
 showing = document.getElementById("showing");
+sorting = document.getElementById("sorting");
 
 let year_added = [];
     let current_year = 2020;
@@ -293,6 +294,7 @@ async function getMovies() {
             back_btn.style.display = "block";
             buttons.style.display = "none";
             showing.style.display = "none";
+            sorting.style.display = "none";
             document.getElementById(`${id}-info`).style.display = "flex";
         }
         
@@ -434,7 +436,9 @@ back_btn.onclick = function() {
     }
 
     back_btn.style.display = "none";
-    buttons.style.display = "flex"
+    buttons.style.display = "flex";
+    showing.style.display = "flex";
+    sorting.style.display = "flex";
 
 }
 
