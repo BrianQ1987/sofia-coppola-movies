@@ -26,6 +26,14 @@ filter_btn.onclick = function() {
     if (document.getElementById("watched-filters")) {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
+    }
     
 }
 
@@ -78,6 +86,14 @@ filter_show_all.onmouseover = function () {
     if (document.getElementById("watched-filters")) {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
+    }
 }
 
 // Filter on duration
@@ -91,6 +107,83 @@ filter_duration.onmouseover = function () {
     if (document.getElementById("watched-filters")) {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    dur_div = document.createElement("div");
+    dur_div.id = "duration-filters";
+
+    durations = [];
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+        durations.push(movies[Object.keys(movies)[i]].duration);
+    }
+
+    max_length = Math.ceil(Math.max(...durations) / 30) * 30;
+
+    for (let i = 30; i <= max_length; i ++) {
+
+        if (i % 30 == 0) {
+
+            d_div = document.createElement("div");
+            d_div.classList.add("menu-item");
+
+            if (i == 30) {
+                d_div.textContent = "Under 30 mins";
+            } else if (i == 60) {
+                d_div.textContent = "Under 1 hour";
+            } else if (i == 90) {
+                d_div.textContent = "Under 1 hour 30 mins";
+            } else if (i % 60 == 0) {
+                d_div.textContent = "Under " + (i / 60) + " hours";
+            } else {
+                d_div.textContent = "Under " + ((i - 30) / 60) + " hours 30 mins"
+            }
+
+            dur_div.appendChild(d_div);
+
+            d_div.onclick = function () {
+
+                filter_menu.removeChild(dur_div);
+
+                for (let i = 0; i < filter_items.length; i ++) {
+                    filter_items[i].classList.remove("clicked")
+                }
+            
+                filter_duration.classList.add("clicked");
+
+                let count = 0;
+
+                for (let j = 0; j < Object.keys(movies).length; j ++) {
+
+                    movie = movies[Object.keys(movies)[j]];                
+                    
+                    if (movie.duration > i) {
+                        document.getElementById(movie.id).style.display = "none";
+                    } else {
+                        document.getElementById(movie.id).style.display = "flex";
+                        count += 1;
+                    }
+            
+                }
+
+                showing.innerHTML = "Displaying movies with a duration of <strong>"+ i + "</strong> minutes or shorter (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies)";
+
+                filter_menu.style.display = "none";
+                filter_btn.classList.remove("clicked");
+            }
+
+        }
+    }
+
+    filter_menu.appendChild(dur_div);
+
 }
 
 // Filter on release date
@@ -104,6 +197,71 @@ filter_release.onmouseover = function () {
     if (document.getElementById("watched-filters")) {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    rel_div = document.createElement("div");
+    rel_div.id = "release-filters";
+
+    decades = [];
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+        if (movies[Object.keys(movies)[i]].released != "") {
+            decades.push(movies[Object.keys(movies)[i]].released.slice(0, 3));
+        }
+    }
+
+    first_decade = Math.min(...decades);
+    last_decade = Math.max(...decades);
+
+    for (let i = first_decade; i <= last_decade; i ++) {
+
+        d_div = document.createElement("div");
+        d_div.classList.add("menu-item");
+        d_div.textContent = i + "0s";
+        rel_div.appendChild(d_div);
+
+        d_div.onclick = function () {
+
+            filter_menu.removeChild(rel_div);
+
+            for (let i = 0; i < filter_items.length; i ++) {
+                filter_items[i].classList.remove("clicked")
+            }
+        
+            filter_release.classList.add("clicked");
+
+            let count = 0;
+
+            for (let j = 0; j < Object.keys(movies).length; j ++) {
+
+                movie = movies[Object.keys(movies)[j]];                
+                
+                if (movie.released.slice(0, 3) != i) {
+                    document.getElementById(movie.id).style.display = "none";
+                } else {
+                    document.getElementById(movie.id).style.display = "flex";
+                    count += 1;
+                }
+        
+            }
+
+            showing.innerHTML = "Displaying movies that were released in the <strong>"+ i + "0s</strong> (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies)";
+
+            filter_menu.style.display = "none";
+            filter_btn.classList.remove("clicked");
+        }
+
+
+    }
+
+    filter_menu.appendChild(rel_div);
 }
 
 // Filter on added year
@@ -117,6 +275,14 @@ filter_added.onmouseover = function() {
 
     if (document.getElementById("watched-filters")) {
         filter_menu.removeChild(document.getElementById("watched-filters"))
+    }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
     }
 
     years_div = document.createElement("div");
@@ -175,6 +341,14 @@ filter_watched.onmouseover = function () {
 
     if (document.getElementById("watched-filters")) {
         filter_menu.removeChild(document.getElementById("watched-filters"))
+    }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
     }
 
     years_div = document.createElement("div");
@@ -265,4 +439,134 @@ filter_no_watch.onmouseover = function () {
     if (document.getElementById("watched-filters")) {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
+    }
 }
+
+
+// Sorting
+sort_az = document.getElementById("sort-az");
+
+sort_az.onclick = function () {
+
+    sort_items = sort_menu.getElementsByClassName("menu-item");
+    for (let i = 0; i < sort_items.length; i ++) {
+        sort_items[i].classList.remove("clicked")
+    }
+
+    sort_az.classList.add("clicked");
+
+    sort_menu.style.display = "none";
+
+    first = moviesDiv.getElementsByClassName("poster")[0].id;
+
+    for (let i = Object.keys(movies).length - 1; i >= 0 ; i --) {
+        
+        movie = movies[Object.keys(movies)[i]];        
+        
+        moviesDiv.insertBefore(document.getElementById(movie.id), document.getElementById(first));
+        first = movie.id;
+        
+    }
+
+    sorting.innerHTML = "";
+
+}
+
+sorting = document.getElementById("sorting")
+
+
+//Sort by Duration
+sort_duration = document.getElementById("sort-duration");
+
+sort_duration.onclick = function() {
+
+    sort_items = sort_menu.getElementsByClassName("menu-item");
+    for (let i = 0; i < sort_items.length; i ++) {
+        sort_items[i].classList.remove("clicked")
+    }
+
+    sort_duration.classList.add("clicked");
+
+    sort_menu.style.display = "none";
+
+    let durations = [];
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+        durations.push(movies[Object.keys(movies)[i]].duration);
+    }    
+
+    durations = [...new Set(durations)];
+    durations = durations.sort((a, b) => b - a);
+
+    first = moviesDiv.getElementsByClassName("poster")[0].id;
+    
+    for (let j = 0; j < durations.length; j ++) {
+
+        for (let i = 0; i < Object.keys(movies).length; i ++) {
+        
+            movie = movies[Object.keys(movies)[i]];        
+
+            if (movie.duration == durations[j]) {
+                moviesDiv.insertBefore(document.getElementById(movie.id), document.getElementById(first));
+                first = movie.id;
+            }
+
+        }
+
+    }
+
+    sorting.innerHTML = "sorted from shortest to longest duration."
+
+}
+
+//Sort by Released date
+sort_release = document.getElementById("sort-release");
+
+sort_release.onclick = function() {
+
+    sort_items = sort_menu.getElementsByClassName("menu-item");
+    for (let i = 0; i < sort_items.length; i ++) {
+        sort_items[i].classList.remove("clicked")
+    }
+
+    sort_release.classList.add("clicked");
+
+    sort_menu.style.display = "none";
+
+    let dates = [];
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+        dates.push(movies[Object.keys(movies)[i]].released);
+    }    
+
+    dates = [...new Set(dates)];
+    dates = dates.sort();
+
+    first = moviesDiv.getElementsByClassName("poster")[0].id;
+    
+    for (let j = 0; j < dates.length; j ++) {
+
+        for (let i = 0; i < Object.keys(movies).length; i ++) {
+        
+            movie = movies[Object.keys(movies)[i]];        
+
+            if (movie.released == dates[j]) {
+                moviesDiv.insertBefore(document.getElementById(movie.id), document.getElementById(first));
+                first = movie.id;
+            }
+
+        }
+
+    }
+
+    sorting.innerHTML = "sorted from newest to oldest release date."
+
+}
+

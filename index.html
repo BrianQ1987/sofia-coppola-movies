@@ -35,18 +35,22 @@
             <div id = "filter-no-watch" class = "menu-item">Never watched</div>
           </div>
           <div id = "sort-menu">
-            <div class = "menu-item">Duration</div>
-            <div class = "menu-item">Release date</div>
+            <div id = "sort-az" class = "menu-item clicked">A-Z</div>
+            <div id = "sort-duration" class = "menu-item">Duration</div>
+            <div id = "sort-release" class = "menu-item">Release date</div>
             <div class = "menu-item">Added</div>
             <div class = "menu-item">Last watched</div>
             <div class = "menu-item">IMDb Score</div>
             <div class = "menu-item">Rotten Tomatoes Score</div>
           </div>
           </div>
-          <div id = "showing"></div>
+          <div class = "row"><div id = "showing"></div><div id = "sorting"></div></div>
           <div id="movies" class="row no-gutters"></div>
+          <div id = "loading">
+            <img src = "img/loading.gif">
+          </div>
           <div id = "movie-info">
-            <div id = "back-btn">Back</div>
+            <div id = "back-btn"><i class="fa-solid fa-sleigh"></i> Back</div>
           </div>
       </div>
 

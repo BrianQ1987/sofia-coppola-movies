@@ -41,6 +41,10 @@ h2 {
     margin-bottom: 15px;
 }
 
+#buttons {
+  display: none;
+}
+
 .tv-logo {
     width: 75px;
     border-radius: 15px;
@@ -220,6 +224,11 @@ h2 {
     margin-left: 15px;
   }
 
+  #sorting:before {
+    content: " ";
+    white-space: pre;
+  }
+
   #added-filters {
     margin-left: 220px;
     margin-top: -120px;
@@ -228,4 +237,29 @@ h2 {
   #watched-filters {
     margin-left: 220px;
     margin-top: -80px;
+  }
+
+  #duration-filters {
+    margin-left: 220px;
+    margin-top: -200px;
+  }
+
+  #release-filters {
+    margin-left: 220px;
+    margin-top: -160px;
+  }
+
+  #movies {
+    display: none;
+  }
+
+  #loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #loading img {
+    width: 70vw;
+    margin-top: 50px;
   }

@@ -718,11 +718,5 @@ let movies = {
         plex: false,
         watched: [],
         added: 2023
-    },
-    "Knives Out": {
-        id: 546554,
-        plex: false,
-        watched: [],
-        added: 2023
     }
 }

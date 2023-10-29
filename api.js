@@ -14,9 +14,9 @@ for (let i = 0; i < Object.keys(movies).length; i ++) {
 
 current_year = Math.max(...year_added);
 
-async function getMovies() {
+movies = sortObject(movies);
 
-    movies = sortObject(movies);
+async function getMovies() {
 
     for (let i = 0; i < Object.keys(movies).length; i ++) {
 
@@ -75,6 +75,8 @@ async function getMovies() {
         info_title = document.createElement("h2");
         info_title.textContent = data.title +  " (" + data.release_date.slice(0, 4) + ")";
 
+        movies[Object.keys(movies)[i]].released = data.release_date;
+
         info_div.appendChild(info_title);
 
         info_row = document.createElement("div");
@@ -101,6 +103,8 @@ async function getMovies() {
         info_facts.classList.add("col-md-7");
         info_facts.classList.add("col-lg-7");
         info_facts.classList.add("col-xl-7");
+
+        movies[Object.keys(movies)[i]].duration = data.runtime;
 
         duration = Math.floor(data.runtime / 60) + "h " + data.runtime % 60 + "m";
         score = Math.round(data.vote_average * 10);
@@ -274,7 +278,7 @@ async function getMovies() {
             } else {
                 emoji = "❌"
             }
-            watched_div.innerHTML += "<div class = 'row' style = 'margin-left: 15px; font-size: 16pt'>" + i + ": " + emoji + "</div>"
+            watched_div.innerHTML += "<div class = 'row' style = 'margin-left: 15px; font-size: 16pt'><div style = 'width: 52px; margin-left: 5px'>" + i + ":</div><div style = 'width: 30px; text-align: center;'>" + emoji + "</div></div>"
         }
 
         info_facts.appendChild(watched_div);
@@ -288,6 +292,7 @@ async function getMovies() {
             moviesDiv.style.display = "none";
             back_btn.style.display = "block";
             buttons.style.display = "none";
+            showing.style.display = "none";
             document.getElementById(`${id}-info`).style.display = "flex";
         }
         
@@ -369,7 +374,10 @@ async function getMovies() {
 
         
         if (i == Object.keys(movies).length - 1) {
-            showing.innerHTML = "Displaying <strong>" + Object.keys(movies).length + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies"
+            showing.innerHTML = "Displaying <strong>" + Object.keys(movies).length + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies";
+            moviesDiv.style.display = "flex";
+            document.getElementById("loading").style.display = "none";
+            buttons.style.display = "flex";
         }
 
 
