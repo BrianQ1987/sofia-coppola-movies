@@ -32,9 +32,7 @@ async function getMovies() {
             data = responseData;
         } catch (error) {
             
-        }    
-
-        
+        }            
 
         let poster_div = document.createElement("div");
         poster_div.classList.add("col-4");
@@ -293,34 +291,75 @@ async function getMovies() {
             document.getElementById(`${id}-info`).style.display = "flex";
         }
         
-        try {
-            const response2 = await fetch(`${config.api_base_url}movie/${id}/watch/providers?api_key=${config.api_key}`)
-            const responseData2 = await response2.json();
-            providers = responseData2;
-            providers = providers.results.GB.flatrate;
+    
+        const response2 = await fetch(`${config.api_base_url}movie/${id}/watch/providers?api_key=${config.api_key}`)
+        const responseData2 = await response2.json();
+        let GB = responseData2.results.GB;
+    
+        let free = [];
+        let subs = [];
+        let ads = [];
 
-            services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus"];
+        if (GB != null) {
 
-            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 25px;'>Watch it on:</div>"
-
-            for (let i = 0; i < Object.keys(providers).length; i ++) {
-                service = providers[Object.keys(providers)[i]].provider_name;   
-                
-                logo = "https://image.tmdb.org/t/p/original" + providers[Object.keys(providers)[i]].logo_path;
-
-                if (services.includes(service)) {
-                    document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + service + "</div>"
-                }
-
+            if (GB.hasOwnProperty("free")) {
+                free = GB.free;
             }
             
+            if (GB.hasOwnProperty("flatrate")) {
+                subs = GB.flatrate;            
+            }
 
-        } catch (error) {
-            
+            if (GB.hasOwnProperty("ads")) {
+                ads = GB.ads;      
+            }
+
         }
 
+        services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus", "Channel 4"];
+
+        document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 25px;'>Watch it on:</div>"
+
+        for (let i = 0; i < Object.keys(subs).length; i ++) {
+            service = subs[Object.keys(subs)[i]].provider_name;   
+            
+            logo = "https://image.tmdb.org/t/p/original" + subs[Object.keys(subs)[i]].logo_path;
+
+            if (services.includes(service)) {
+                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + service + "</div>"
+            }
+
+        }
+
+        free_services = ["BBC iPlayer"];
+
+        for (let i = 0; i < Object.keys(free).length; i ++) {
+            free_service = free[Object.keys(free)[i]].provider_name; 
+            
+            logo = "https://image.tmdb.org/t/p/original" + free[Object.keys(free)[i]].logo_path;
+
+            if (free_services.includes(free_service)) {
+                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + free_service + "</div>"
+            }
+
+        }
+
+        ad_services = ["My5", "Freevee"];
+
+        for (let i = 0; i < Object.keys(ads).length; i ++) {
+            ad_service = ads[Object.keys(ads)[i]].provider_name; 
+            
+            logo = "https://image.tmdb.org/t/p/original" + ads[Object.keys(ads)[i]].logo_path;
+
+            if (ad_services.includes(ad_service)) {
+                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + ad_service + "</div>"
+            }
+
+        }
+
+
         if (plex == true) {
-            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'img/plex.svg'>Plex</div>"
+            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'https://image.tmdb.org/t/p/original/swMyOSh6p3ZOTr76yPV6EyQFTik.jpg'>Plex</div>"
         }
 
         overview = document.createElement("div");

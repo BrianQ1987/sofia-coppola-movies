@@ -712,5 +712,17 @@ let movies = {
         plex: true,
         watched: [2022],
         added: 2022
+    },
+    "Holiday Affair": {
+        id: 24863,
+        plex: false,
+        watched: [],
+        added: 2023
+    },
+    "Knives Out": {
+        id: 546554,
+        plex: false,
+        watched: [],
+        added: 2023
     }
 }
