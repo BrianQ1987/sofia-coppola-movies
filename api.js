@@ -437,8 +437,8 @@ back_btn.onclick = function() {
 
     back_btn.style.display = "none";
     buttons.style.display = "flex";
-    showing.style.display = "flex";
-    sorting.style.display = "flex";
+    showing.style.display = "block";
+    sorting.style.display = "block";
 
 }
 
