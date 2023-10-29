@@ -220,10 +220,6 @@ h2 {
     margin-left: 135px;
   }
 
-  #showing {
-    margin-left: 15px;
-  }
-
   #sorting:before {
     content: " ";
     white-space: pre;
