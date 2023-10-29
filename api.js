@@ -255,6 +255,7 @@ async function getMovies() {
         added_div = document.createElement("div");
         added_div.classList.add("row");
         added_div.style.marginTop = "10px";
+        added_div.style.marginLeft = "0px";
         added_div.innerHTML = "<div>Added: <span class = 'added-year'>" + movie.added + "</span></div>";
         if (movie.added == current_year) {
             added_div.innerHTML += "<div class = 'new-entry'>New</div>"
@@ -263,7 +264,6 @@ async function getMovies() {
         info_facts.appendChild(added_div);
 
         watched_div = document.createElement("div");
-        watched_div.style.marginLeft = "-15px";
         watched_div.style.marginTop = "15px";
 
         watched_div.innerHTML = "<div>Watched:</div>";
