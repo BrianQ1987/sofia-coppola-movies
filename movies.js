@@ -730,5 +730,17 @@ let movies = {
         plex: true,
         watched: [],
         added: 2022
+    },
+    "Gremlins": {
+        id: 927,
+        plex: true,
+        watched: [2022],
+        added: 2022
+    },
+    "I Believe in Santa": {
+        id: 1053110,
+        plex: false,
+        watched: [2022],
+        added: 2022
     }
 }
