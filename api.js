@@ -4,6 +4,11 @@ showing = document.getElementById("showing");
 back_btn = document.getElementById("back-btn");
 back_link = document.getElementById("back-link");
 sorting = document.getElementById("sorting");
+can = document.getElementById("can");
+
+services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus", "Channel 4"];
+free_services = ["BBC iPlayer"];
+ad_services = ["My5", "Freevee"];
 
 
 let year_added = [];
@@ -116,6 +121,10 @@ async function getMovies() {
         colours = ["#DE3700", "#F85B00", "#E1FF00", "#92E000", "#2AA10F"];
 
         ratings_div = document.createElement("div");
+
+        imdb_score = null;
+        rt_score = null;
+        meta_score = null;
         
         try {
             const response_i = await fetch("https://www.omdbapi.com/?i=" + data.imdb_id + "&apikey=f10fad26")
@@ -123,9 +132,7 @@ async function getMovies() {
             ratings = responseData_i;
             ratings = ratings.Ratings;
 
-            imdb_score = null;
-            rt_score = null;
-            meta_score = null;
+            
             for (let i = 0; i < ratings.length; i ++) {
                 if (ratings[i].Source == "Internet Movie Database") {
                     imdb_score = ratings[i].Value;
@@ -229,6 +236,18 @@ async function getMovies() {
 
         }
 
+        if (imdb_score != null) {
+            movies[Object.keys(movies)[i]].imdb = imdb_score;
+        } else {
+            movies[Object.keys(movies)[i]].imdb = "0.0/10";
+        }
+
+        if (rt_score != null) {
+            movies[Object.keys(movies)[i]].rt = rt_score;
+        } else {
+            movies[Object.keys(movies)[i]].rt = "0%";
+        }
+
         tmdb_pie = document.createElement("div");
         tmdb_pie.classList.add("pie");
         tmdb_pie.classList.add("pie1");
@@ -314,6 +333,8 @@ async function getMovies() {
         let subs = [];
         let ads = [];
 
+        movies[Object.keys(movies)[i]].platforms = [];
+
         if (GB != null) {
 
             if (GB.hasOwnProperty("free")) {
@@ -330,8 +351,6 @@ async function getMovies() {
 
         }
 
-        services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus", "Channel 4"];
-
         document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 25px;'>Watch it on:</div>"
 
         for (let i = 0; i < Object.keys(subs).length; i ++) {
@@ -340,12 +359,11 @@ async function getMovies() {
             logo = "https://image.tmdb.org/t/p/original" + subs[Object.keys(subs)[i]].logo_path;
 
             if (services.includes(service)) {
-                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + service + "</div>"
+                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + service + "</div>";
+                movie.platforms.push(service);
             }
 
         }
-
-        free_services = ["BBC iPlayer"];
 
         for (let i = 0; i < Object.keys(free).length; i ++) {
             free_service = free[Object.keys(free)[i]].provider_name; 
@@ -353,12 +371,11 @@ async function getMovies() {
             logo = "https://image.tmdb.org/t/p/original" + free[Object.keys(free)[i]].logo_path;
 
             if (free_services.includes(free_service)) {
-                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + free_service + "</div>"
+                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + free_service + "</div>";
+                movie.platforms.push(free_service);
             }
 
         }
-
-        ad_services = ["My5", "Freevee"];
 
         for (let i = 0; i < Object.keys(ads).length; i ++) {
             ad_service = ads[Object.keys(ads)[i]].provider_name; 
@@ -366,14 +383,16 @@ async function getMovies() {
             logo = "https://image.tmdb.org/t/p/original" + ads[Object.keys(ads)[i]].logo_path;
 
             if (ad_services.includes(ad_service)) {
-                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + ad_service + "</div>"
+                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + ad_service + "</div>";
+                movie.platforms.push(ad_service);
             }
 
         }
 
 
         if (plex == true) {
-            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'https://image.tmdb.org/t/p/original/swMyOSh6p3ZOTr76yPV6EyQFTik.jpg'>Plex</div>"
+            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'https://image.tmdb.org/t/p/original/swMyOSh6p3ZOTr76yPV6EyQFTik.jpg'>Plex</div>";
+            movie.platforms.push("Plex")
         }
 
         overview = document.createElement("div");
@@ -389,6 +408,8 @@ async function getMovies() {
             buttons.style.display = "flex";
         }
 
+        load_pct = (i + 1) / Object.keys(movies).length * 100;
+        can.style.clipPath = "polygon(0% 0%, " + load_pct + "% 0%, " + load_pct + "% 100%, 0% 100%)"
 
     }
 
@@ -442,8 +463,8 @@ back_btn.onclick = function() {
 
     back_btn.style.display = "none";
     buttons.style.display = "flex";
-    showing.style.display = "block";
-    sorting.style.display = "block";
+    showing.removeAttribute("style");
+    sorting.removeAttribute("style");
 
 }
 

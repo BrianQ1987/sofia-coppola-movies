@@ -39,6 +39,7 @@ h2 {
     cursor: pointer;
     display: none;
     margin-bottom: 15px;
+    padding: 10px;
 }
 
 #back-link {
@@ -235,22 +236,33 @@ h2 {
 
   #added-filters {
     margin-left: 220px;
-    margin-top: -120px;
+    margin-top: -200px;
   }
 
   #watched-filters {
     margin-left: 220px;
-    margin-top: -80px;
+    margin-top: -160px;
+  }
+
+
+  #last-filters {
+    margin-left: 220px;
+    margin-top: -120px;
   }
 
   #duration-filters {
     margin-left: 220px;
-    margin-top: -200px;
+    margin-top: -280px;
   }
 
   #release-filters {
     margin-left: 220px;
-    margin-top: -160px;
+    margin-top: -240px;
+  }
+
+  #platform-filters {
+    margin-left: 220px;
+    margin-top: -40px;
   }
 
   #movies {
@@ -261,9 +273,11 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 
   #loading img {
     width: 70vw;
     margin-top: 50px;
+    animation-direction: alternate;
   }

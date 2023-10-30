@@ -27,12 +27,20 @@ filter_btn.onclick = function() {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
 
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
     if (document.getElementById("duration-filters")) {
         filter_menu.removeChild(document.getElementById("duration-filters"))
     }
 
     if (document.getElementById("release-filters")) {
         filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
     }
     
 }
@@ -87,12 +95,20 @@ filter_show_all.onmouseover = function () {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
 
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
     if (document.getElementById("duration-filters")) {
         filter_menu.removeChild(document.getElementById("duration-filters"))
     }
 
     if (document.getElementById("release-filters")) {
         filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
     }
 }
 
@@ -108,12 +124,20 @@ filter_duration.onmouseover = function () {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
 
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
     if (document.getElementById("duration-filters")) {
         filter_menu.removeChild(document.getElementById("duration-filters"))
     }
 
     if (document.getElementById("release-filters")) {
         filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
     }
 
     dur_div = document.createElement("div");
@@ -198,12 +222,20 @@ filter_release.onmouseover = function () {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
 
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
     if (document.getElementById("duration-filters")) {
         filter_menu.removeChild(document.getElementById("duration-filters"))
     }
 
     if (document.getElementById("release-filters")) {
         filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
     }
 
     rel_div = document.createElement("div");
@@ -277,12 +309,20 @@ filter_added.onmouseover = function() {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
 
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
     if (document.getElementById("duration-filters")) {
         filter_menu.removeChild(document.getElementById("duration-filters"))
     }
 
     if (document.getElementById("release-filters")) {
         filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
     }
 
     years_div = document.createElement("div");
@@ -330,8 +370,7 @@ filter_added.onmouseover = function() {
 
 }
 
-
-// Filter on last watched
+// Filter on watched
 filter_watched = document.getElementById("filter-watched");
 
 filter_watched.onmouseover = function () {
@@ -343,6 +382,10 @@ filter_watched.onmouseover = function () {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
 
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
     if (document.getElementById("duration-filters")) {
         filter_menu.removeChild(document.getElementById("duration-filters"))
     }
@@ -351,13 +394,17 @@ filter_watched.onmouseover = function () {
         filter_menu.removeChild(document.getElementById("release-filters"))
     }
 
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
+    }
+
     years_div = document.createElement("div");
     years_div.id = "watched-filters";
 
     for (let i = 2020; i <= current_year; i ++) {
         year_div = document.createElement("div");
         year_div.classList.add("menu-item");
-        year_div.textContent = "Last watched in " + i;
+        year_div.textContent = "Watched in " + i;
         years_div.appendChild(year_div);
 
         year_div.onclick = function() {
@@ -376,9 +423,82 @@ filter_watched.onmouseover = function () {
 
                 movie = movies[Object.keys(movies)[j]];
                 
+                if (!movie.watched.includes(i) || movie.watched.length == 0) {
+                    document.getElementById(movie.id).style.display = "none";
+                } else {
+                    document.getElementById(movie.id).style.display = "flex";
+                    count += 1;
+                }
+        
+            }
+
+            showing.innerHTML = "Displaying movies watched in <strong>"+ i + "</strong> (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies)";
+
+            filter_menu.style.display = "none";
+            filter_btn.classList.remove("clicked");
+        }
+    }
+
+    filter_menu.appendChild(years_div);
+}
+
+
+// Filter on last watched
+filter_last = document.getElementById("filter-last");
+
+filter_last.onmouseover = function () {
+    if (document.getElementById("added-filters")) {
+        filter_menu.removeChild(document.getElementById("added-filters"))
+    }
+
+    if (document.getElementById("watched-filters")) {
+        filter_menu.removeChild(document.getElementById("watched-filters"))
+    }
+
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
+    }
+
+    years_div = document.createElement("div");
+    years_div.id = "last-filters";
+
+    for (let i = 2020; i <= current_year; i ++) {
+        year_div = document.createElement("div");
+        year_div.classList.add("menu-item");
+        year_div.textContent = "Last watched in " + i;
+        years_div.appendChild(year_div);
+
+        year_div.onclick = function() {
+
+            filter_menu.removeChild(years_div);
+
+            for (let i = 0; i < filter_items.length; i ++) {
+                filter_items[i].classList.remove("clicked")
+            }
+        
+            filter_last.classList.add("clicked");
+
+            let count = 0;
+
+            for (let j = 0; j < Object.keys(movies).length; j ++) {
+
+                movie = movies[Object.keys(movies)[j]];
+                
                 last_watched = movie.watched[movie.watched.length - 1];
                 
-                if (last_watched != i || movie.lenth == 0) {
+                if (last_watched != i || movie.watched.length == 0) {
                     document.getElementById(movie.id).style.display = "none";
                 } else {
                     document.getElementById(movie.id).style.display = "flex";
@@ -440,6 +560,10 @@ filter_no_watch.onmouseover = function () {
         filter_menu.removeChild(document.getElementById("watched-filters"))
     }
 
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
     if (document.getElementById("duration-filters")) {
         filter_menu.removeChild(document.getElementById("duration-filters"))
     }
@@ -447,6 +571,93 @@ filter_no_watch.onmouseover = function () {
     if (document.getElementById("release-filters")) {
         filter_menu.removeChild(document.getElementById("release-filters"))
     }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
+    }
+}
+
+// Filter on platform
+filter_platform = document.getElementById("filter-platform");
+
+filter_platform.onmouseover = function () {
+    if (document.getElementById("added-filters")) {
+        filter_menu.removeChild(document.getElementById("added-filters"))
+    }
+
+    if (document.getElementById("watched-filters")) {
+        filter_menu.removeChild(document.getElementById("watched-filters"))
+    }
+
+    if (document.getElementById("last-filters")) {
+        filter_menu.removeChild(document.getElementById("last-filters"))
+    }
+
+    if (document.getElementById("duration-filters")) {
+        filter_menu.removeChild(document.getElementById("duration-filters"))
+    }
+
+    if (document.getElementById("release-filters")) {
+        filter_menu.removeChild(document.getElementById("release-filters"))
+    }
+
+    if (document.getElementById("platform-filters")) {
+        filter_menu.removeChild(document.getElementById("platform-filters"))
+    }
+
+    years_div = document.createElement("div");
+    years_div.id = "platform-filters";
+
+    platforms = ["Plex"].concat(services, free_services, ad_services);
+    platforms.push("Not available")
+
+    for (let i = 0; i < platforms.length; i ++) {
+        year_div = document.createElement("div");
+        year_div.classList.add("menu-item");
+        year_div.textContent = platforms[i];
+        years_div.appendChild(year_div);
+
+        year_div.onclick = function() {
+
+            filter_menu.removeChild(years_div);
+
+            for (let i = 0; i < filter_items.length; i ++) {
+                filter_items[i].classList.remove("clicked")
+            }
+        
+            filter_platform.classList.add("clicked");
+
+            let count = 0;
+
+            for (let j = 0; j < Object.keys(movies).length; j ++) {
+
+                movie = movies[Object.keys(movies)[j]];
+
+                if (movie.platforms.length == 0) {
+                    movie.platforms = "Not available";
+                }
+                
+                if (!movie.platforms.includes(platforms[i])) {
+                    document.getElementById(movie.id).style.display = "none";
+                } else {
+                    document.getElementById(movie.id).style.display = "flex";
+                    count += 1;
+                }
+        
+            }
+
+            if (platforms[i] == "Not available") {
+                showing.innerHTML = "Displaying movies that are <strong>not available</strong> on any platform (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies)";
+            } else {
+                showing.innerHTML = "Displaying movies available on <strong>"+ platforms[i] + "</strong> (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies)";
+            }
+
+            filter_menu.style.display = "none";
+            filter_btn.classList.remove("clicked");
+        }
+    }
+
+    filter_menu.appendChild(years_div);
 }
 
 
@@ -564,6 +775,172 @@ sort_release.onclick = function() {
     }
 
     sorting.innerHTML = "sorted from newest to oldest release date."
+
+}
+
+//Sort by date added
+sort_added = document.getElementById("sort-added");
+
+sort_added.onclick = function() {
+
+    sort_items = sort_menu.getElementsByClassName("menu-item");
+    for (let i = 0; i < sort_items.length; i ++) {
+        sort_items[i].classList.remove("clicked")
+    }
+
+    sort_added.classList.add("clicked");
+
+    sort_menu.style.display = "none";
+
+    first = moviesDiv.getElementsByClassName("poster")[0].id;
+    
+    for (let j = 2020; j <= current_year; j ++) {
+
+        for (let i = 0; i < Object.keys(movies).length; i ++) {
+        
+            movie = movies[Object.keys(movies)[i]];        
+
+            if (movie.added == j) {
+                moviesDiv.insertBefore(document.getElementById(movie.id), document.getElementById(first));
+                first = movie.id;
+            }
+
+        }
+
+    }
+
+    sorting.innerHTML = "sorted from newest to oldest date added."
+
+}
+
+//Sort by last watched
+sort_watched = document.getElementById("sort-watched");
+
+sort_watched.onclick = function() {
+
+    sort_items = sort_menu.getElementsByClassName("menu-item");
+    for (let i = 0; i < sort_items.length; i ++) {
+        sort_items[i].classList.remove("clicked")
+    }
+
+    sort_watched.classList.add("clicked");
+
+    sort_menu.style.display = "none";
+
+    first = moviesDiv.getElementsByClassName("poster")[0].id;
+    
+    for (let j = 2020; j <= current_year; j ++) {
+
+        for (let i = 0; i < Object.keys(movies).length; i ++) {
+        
+            movie = movies[Object.keys(movies)[i]];        
+
+            last_watched = movie.watched[movie.watched.length - 1];
+
+            if (last_watched == j) {
+                moviesDiv.insertBefore(document.getElementById(movie.id), document.getElementById(first));
+                first = movie.id;
+            }
+
+        }
+
+    }
+
+    sorting.innerHTML = "sorted by most recently watched."
+
+}
+
+//Sort by IMDb score
+sort_imdb = document.getElementById("sort-imdb");
+
+sort_imdb.onclick = function() {
+
+    sort_items = sort_menu.getElementsByClassName("menu-item");
+    for (let i = 0; i < sort_items.length; i ++) {
+        sort_items[i].classList.remove("clicked")
+    }
+
+    sort_imdb.classList.add("clicked");
+
+    sort_menu.style.display = "none";
+
+    let scores = [];
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+        scores.push(movies[Object.keys(movies)[i]].imdb);
+    }    
+
+    scores = [...new Set(scores)];
+    scores = scores.sort();
+
+    console.log(scores)
+
+    first = moviesDiv.getElementsByClassName("poster")[0].id;
+    
+    for (let j = 0; j < scores.length; j ++) {
+
+        for (let i = 0; i < Object.keys(movies).length; i ++) {
+        
+            movie = movies[Object.keys(movies)[i]];        
+
+            if (movie.imdb == scores[j]) {
+                moviesDiv.insertBefore(document.getElementById(movie.id), document.getElementById(first));
+                first = movie.id;
+            }
+
+        }
+
+    }
+
+    sorting.innerHTML = "sorted from highest to lowest IMDb score."
+
+}
+
+//Sort by IMDb score
+sort_rt = document.getElementById("sort-rt");
+
+sort_rt.onclick = function() {
+
+    sort_items = sort_menu.getElementsByClassName("menu-item");
+    for (let i = 0; i < sort_items.length; i ++) {
+        sort_items[i].classList.remove("clicked")
+    }
+
+    sort_rt.classList.add("clicked");
+
+    sort_menu.style.display = "none";
+
+    let scores = [];
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+
+        let rt_value = movies[Object.keys(movies)[i]].rt;
+        rt_value = rt_value.slice(0, rt_value.indexOf("%"));
+
+        scores.push(rt_value);
+    }    
+
+    scores = [...new Set(scores)];
+    scores = scores.sort((a, b) => a - b);
+
+    first = moviesDiv.getElementsByClassName("poster")[0].id;
+    
+    for (let j = 0; j < scores.length; j ++) {
+
+        for (let i = 0; i < Object.keys(movies).length; i ++) {
+        
+            movie = movies[Object.keys(movies)[i]];        
+
+            if (movie.rt == scores[j] + "%") {
+                moviesDiv.insertBefore(document.getElementById(movie.id), document.getElementById(first));
+                first = movie.id;
+            }
+
+        }
+
+    }
+
+    sorting.innerHTML = "sorted from highest to lowest Rotten Tomatoes score."
 
 }
 
