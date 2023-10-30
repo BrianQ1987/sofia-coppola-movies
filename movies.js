@@ -718,5 +718,11 @@ let movies = {
         plex: false,
         watched: [],
         added: 2023
+    },
+    "Love Actually": {
+        id: 508,
+        plex: false,
+        watched: [],
+        added: 2023
     }
 }
