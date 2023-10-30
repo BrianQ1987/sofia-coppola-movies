@@ -724,5 +724,11 @@ let movies = {
         plex: false,
         watched: [],
         added: 2023
+    },
+    "Comfort and Joy": {
+        id: 30278,
+        plex: true,
+        watched: [],
+        added: 2022
     }
 }

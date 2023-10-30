@@ -500,7 +500,7 @@ function castLinks () {
 
         movie = movies[Object.keys(movies)[i]];
 
-        for (let j = 0; j < movie.cast.length; j ++) {
+        for (let j = 3; j < movie.cast.length; j ++) {
 
             actor = movie.cast[j];
 
@@ -587,7 +587,6 @@ back_btn.onclick = function() {
     showing.removeAttribute("style");
     sorting.removeAttribute("style");
 
+    filter_show_all.click();
+
 }
-
-
-
