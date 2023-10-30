@@ -479,9 +479,6 @@ sort_az.onclick = function () {
 
 }
 
-sorting = document.getElementById("sorting")
-
-
 //Sort by Duration
 sort_duration = document.getElementById("sort-duration");
 

@@ -3,6 +3,8 @@ buttons = document.getElementById("buttons");
 showing = document.getElementById("showing");
 back_btn = document.getElementById("back-btn");
 back_link = document.getElementById("back-link");
+sorting = document.getElementById("sorting");
+
 
 let year_added = [];
     let current_year = 2020;
@@ -295,6 +297,7 @@ async function getMovies() {
             back_btn.style.display = "block";
             buttons.style.display = "none";
             showing.style.display = "none";
+            sorting.style.display = "none";
             document.getElementById(`${id}-info`).style.display = "flex";
 
             back_link.href = "#" + movie.id;
@@ -438,7 +441,9 @@ back_btn.onclick = function() {
     }
 
     back_btn.style.display = "none";
-    buttons.style.display = "flex"
+    buttons.style.display = "flex";
+    showing.style.display = "block";
+    sorting.style.display = "block";
 
 }
 
