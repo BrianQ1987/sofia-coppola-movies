@@ -281,3 +281,7 @@ h2 {
     margin-top: 50px;
     animation-direction: alternate;
   }
+
+  #can {
+    clip-path: polygon(0% 0%, 0% 100%);
+  }
