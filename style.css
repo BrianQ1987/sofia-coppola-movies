@@ -285,3 +285,11 @@ h2 {
   #can {
     clip-path: polygon(0% 0%, 0% 100%);
   }
+
+  .cast {
+    cursor: pointer;
+  }
+
+  .cast:hover {
+    filter: opacity(30%);
+  }

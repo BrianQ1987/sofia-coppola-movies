@@ -50,7 +50,7 @@ async function getMovies() {
         poster_div.classList.add("p-1");
         poster_div.classList.add("poster")
         poster_div.id = id;
-        poster_div.innerHTML = `<img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img>`;
+        poster_div.innerHTML = `<a href = "#top"><img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img></a>`;
 
         moviesDiv.appendChild(poster_div);
 
@@ -396,16 +396,62 @@ async function getMovies() {
         }
 
         overview = document.createElement("div");
-        overview.innerHTML = "<div><h2>Plot summary</h2></div><div>" + data.overview + "</div>";
+        overview.innerHTML = "<h2>Plot summary</h2>" + data.overview;
 
         info_div.appendChild(overview);
 
+        genre = document.createElement("div");
+        if (data.genres.length > 1) {
+            genre.innerHTML = "<h2>Genres</h2>";
+        } else {
+            genre.innerHTML = "<h2>Genre</h2>";
+        }
+
+        for (let j = 0; j < data.genres.length; j ++) {
+            genre.innerHTML += data.genres[j].name + ", ";
+            
+            if (j == data.genres.length - 1) {
+                genre.innerHTML = genre.innerHTML.slice(0, -2);
+            }
+        }
+
+        info_div.appendChild(genre);
+
+        
+        const response3 = await fetch(`${config.api_base_url}movie/${id}/credits?api_key=${config.api_key}`)
+        const responseData3 = await response3.json();
+        let credits = responseData3;
+
+
+        movie.cast = [];
+
+        starring = document.createElement("div");
+        starring.innerHTML = "<h2>Starring</h2>";
+        
+        actors = document.createElement("div");
+        actors.style.display = "flex";
+        actors.classList.add("row");
+        actors.id = data.id + "-cast";
+
+        for (let j = 0; j < Object.keys(credits.cast).length; j ++) {
+            if (credits.cast[j].profile_path != null) {
+                image = credits.cast[j].profile_path
+            } else {
+                image = data.poster_path
+            }
+            actors.innerHTML += "<div id = '" + data.id + "-" + credits.cast[j].id + "' class = 'col-4 col-lg-3 col-xl-2 cast'><img src = '" + config.image_base_url + image + "' class = 'img-fluid'><div style = 'font-size: 14pt; font-weight: bold;'>" + credits.cast[j].name + "</div><div>" + credits.cast[j].character + "</div></div>";
+            movie.cast.push(credits.cast[j].id)
+        }
+        
+        starring.appendChild(actors);
+        info_div.appendChild(starring);        
         
         if (i == Object.keys(movies).length - 1) {
             showing.innerHTML = "Displaying <strong>" + Object.keys(movies).length + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies";
             moviesDiv.style.display = "flex";
             document.getElementById("loading").style.display = "none";
             buttons.style.display = "flex";
+            castLinks();
         }
 
         load_pct = (i + 1) / Object.keys(movies).length * 100;
@@ -447,6 +493,81 @@ function sortObject(o) {
     
     return sorted;
  }
+
+function castLinks () {
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+
+        movie = movies[Object.keys(movies)[i]];
+
+        for (let j = 0; j < movie.cast.length; j ++) {
+
+            actor = movie.cast[j];
+
+            let keep_actor = false;
+
+            for (let k = 0; k < Object.keys(movies).length; k ++) {
+
+                movie_2 = movies[Object.keys(movies)[k]];
+
+                if (movie_2.cast.includes(actor) & movie_2.id != movie.id) {
+                    keep_actor = true;
+                    break;
+                }
+
+            }
+
+            if (keep_actor == false) {
+                document.getElementById(movie.id + "-cast").removeChild(document.getElementById(movie.id + "-" + actor))
+            }
+
+        }
+
+    }
+
+    castDivs = document.getElementsByClassName("cast");
+
+    for (let i = 0; i < castDivs.length; i ++) {
+
+        castDivs[i].onclick = function() {
+
+            actor = Number(this.id.slice(this.id.indexOf("-") + 1));
+            actor_name = this.getElementsByTagName("div")[0].textContent;
+
+            moviesDiv.style.display = "flex";
+            infos = document.getElementsByClassName("info");
+    
+            for (let k = 0; k < infos.length; k ++) {
+                infos[k].style.display = "none";
+            }
+    
+            back_btn.style.display = "none";
+            buttons.style.display = "flex";
+            showing.removeAttribute("style");
+            sorting.removeAttribute("style");
+            filter_btn.classList.add("clicked");
+
+            let count = 0;
+
+            for (let j = 0; j < Object.keys(movies).length; j ++) {
+
+                movie = movies[Object.keys(movies)[j]];
+
+                if (movie.cast.includes(actor)) {
+                    document.getElementById(movie.id).style.display = "flex";
+                    count += 1;
+                } else {
+                    document.getElementById(movie.id).style.display = "none";
+                }
+            }
+
+            showing.innerHTML = "Displaying movies starring <strong>" + actor_name + "</strong> (<strong>" + count + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies)"
+
+        }
+
+    }
+
+}
 
 window.onload = function() {
     getMovies();
