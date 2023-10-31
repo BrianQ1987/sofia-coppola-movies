@@ -422,6 +422,26 @@ async function getMovies() {
         const responseData3 = await response3.json();
         let credits = responseData3;
 
+        director = [];
+        for (let j = 0; j < credits.crew.length; j ++) {
+            if (credits.crew[j].job == "Director") {
+                director.push(credits.crew[j].name)
+            }
+        }
+
+        directorDiv = document.createElement("div");
+        
+        if (director.length == 1) {
+            directorDiv.innerHTML = "<h2>Director</h2>" + director[0]
+        } else if (director.length > 1) {
+            directorDiv.innerHTML = "<h2>Directors</h2>"
+            for (let j = 0; j < director.length; j ++) {
+                directorDiv.innerHTML += director[j] + ", ";
+            }
+            directorDiv.innerHTML = directorDiv.innerHTML.slice(0, -2);
+        }
+
+        info_div.appendChild(directorDiv);
 
         movie.cast = [];
 
