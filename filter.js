@@ -873,8 +873,6 @@ sort_imdb.onclick = function() {
     scores = [...new Set(scores)];
     scores = scores.sort();
 
-    console.log(scores)
-
     first = moviesDiv.getElementsByClassName("poster")[0].id;
     
     for (let j = 0; j < scores.length; j ++) {
