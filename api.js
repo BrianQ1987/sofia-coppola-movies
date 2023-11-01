@@ -607,6 +607,8 @@ back_btn.onclick = function() {
     showing.removeAttribute("style");
     sorting.removeAttribute("style");
 
-    filter_show_all.click();
+    if ([...filter_show_all.classList].includes("clicked")) {
+        filter_show_all.click();
+    }
 
 }
