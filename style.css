@@ -194,7 +194,7 @@ h2 {
     margin-left: 5px;
   }
 
-  #filter-btn, #sort-btn {
+  #filter-btn, #sort-btn, #random-btn {
     width: 120px;
     padding: 10px;
     border-radius: 10px;
@@ -202,6 +202,7 @@ h2 {
     margin-left: 15px;
     border: solid 1px #ffffff;
     font-size: 14pt;
+    margin-top: 15px;
   }
 
   .clicked {

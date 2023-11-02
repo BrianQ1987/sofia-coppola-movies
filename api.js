@@ -5,6 +5,8 @@ back_btn = document.getElementById("back-btn");
 back_link = document.getElementById("back-link");
 sorting = document.getElementById("sorting");
 can = document.getElementById("can");
+sort_menu = document.getElementById("sort-menu");
+filter_menu = document.getElementById("filter-menu");
 
 services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus", "Channel 4"];
 free_services = ["BBC iPlayer"];
@@ -317,10 +319,11 @@ async function getMovies() {
             buttons.style.display = "none";
             showing.style.display = "none";
             sorting.style.display = "none";
+            sort_menu.style.display = "none";
+            filter_menu.style.display = "none";
             document.getElementById(`${id}-info`).style.display = "flex";
 
             back_link.href = "#" + movie.id;
-
             
         }
         

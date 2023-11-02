@@ -942,3 +942,18 @@ sort_rt.onclick = function() {
 
 }
 
+random_btn = document.getElementById("random-btn");
+
+random_btn.onclick = function() {
+
+    let ids = [];
+
+    for (let i = 0; i < Object.keys(movies).length; i ++) {
+        ids.push(movies[Object.keys(movies)[i]].id);
+    }
+
+    let randomMovie = ids[Math.floor(Math.random() * ids.length)];
+
+    document.getElementById(randomMovie).click();
+
+}
