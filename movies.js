@@ -742,5 +742,11 @@ let movies = {
         plex: false,
         watched: [2022],
         added: 2022
+    },
+    "Family Switch": {
+        id: 798021,
+        plex: false,
+        watched: [],
+        added: 2023
     }
 }
