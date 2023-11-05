@@ -253,7 +253,7 @@ let movies = {
     },
     "How the Grinch Stole Christmas (1966)": {
         id: 13377,
-        plex: false,
+        plex: true,
         watched: [2020, 2021, 2022],
         added: 2020
     },
