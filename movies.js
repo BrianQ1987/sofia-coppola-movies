@@ -161,7 +161,7 @@ let movies = {
         watched: [2020, 2021],
         added: 2020
     },
-    "Dr Seuss' The Grinch (2018)": {
+    "The Grinch (2018)": {
         id: 360920,
         plex: true,
         watched: [2020],
