@@ -632,7 +632,7 @@ let movies = {
     "The Santa Clause 3: The Escape Clause": {
         id: 13767,
         plex: false,
-        watched: [],
+        watched: [2023],
         added: 2020
     },
     "The Shop Around the Corner": {
