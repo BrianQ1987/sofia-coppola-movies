@@ -716,7 +716,7 @@ let movies = {
     "Holiday Affair": {
         id: 24863,
         plex: false,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Love Actually": {
