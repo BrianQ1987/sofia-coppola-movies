@@ -54,6 +54,10 @@ h2 {
   display: none;
 }
 
+#button-load {
+  display: none;
+}
+
 .tv-logo {
     width: 75px;
     border-radius: 15px;
