@@ -62,7 +62,7 @@ let movies = {
     "Anna and the Apocalypse ": {
         id: 461928,
         plex: false,
-        watched: [2022],
+        watched: [2022, 2023],
         added: 2022
     },
     "Arthur Christmas": {
