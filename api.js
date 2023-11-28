@@ -86,6 +86,7 @@ async function getMovies() {
         info_title.textContent = data.title +  " (" + data.release_date.slice(0, 4) + ")";
 
         movies[Object.keys(movies)[i]].released = data.release_date;
+        movies[Object.keys(movies)[i]].poster_path = data.poster_path;
 
         info_div.appendChild(info_title);
 
@@ -115,165 +116,19 @@ async function getMovies() {
         info_facts.classList.add("col-xl-7");
 
         movies[Object.keys(movies)[i]].duration = data.runtime;
+        movies[Object.keys(movies)[i]].imdb_id = data.imdb_id;
 
         duration = Math.floor(data.runtime / 60) + "h " + data.runtime % 60 + "m";
         score = Math.round(data.vote_average * 10);
         
         colours = ["#DE3700", "#F85B00", "#E1FF00", "#92E000", "#2AA10F"];
 
-        ratings_div = document.createElement("div");
+        let ratings_div = document.createElement("div");
+        ratings_div.id = id + "-ratings";
 
         imdb_score = null;
         rt_score = null;
         meta_score = null;
-        
-        try {
-            const response_i = await fetch("https://www.omdbapi.com/?i=" + data.imdb_id + "&apikey=f10fad26")
-            const responseData_i = await response_i.json();
-            ratings = responseData_i;
-            ratings = ratings.Ratings;
-
-            
-            for (let i = 0; i < ratings.length; i ++) {
-                if (ratings[i].Source == "Internet Movie Database") {
-                    imdb_score = ratings[i].Value;
-                }
-
-                if (ratings[i].Source == "Rotten Tomatoes") {
-                    rt_score = ratings[i].Value;
-                }
-
-                if (ratings[i].Source == "Metacritic") {
-                    meta_score = ratings[i].Value;
-                }
-            }
-
-            if (imdb_score != null) {
-                imdb_pie = document.createElement("div");
-                imdb_pie.classList.add("pie");
-                imdb_pie.classList.add("pie1");
-                imdb_num = imdb_score.slice(0, imdb_score.indexOf("/"))
-    
-                if (imdb_num < 5) {
-                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
-                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
-                } else {
-                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
-                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
-                }
-    
-                imdb_pie.innerHTML = '<div class="outer-right mask">' +
-                                     inner_right +
-                                     '</div>' +
-                                     '<div class="outer-left mask">' +
-                                     inner_left +
-                                     '</div>' +
-                                     '<div class="content">' +
-                                     '<span style = "font-size: 30px">' + imdb_score + '</span>' +
-                                     '</div>' +
-                                     '<div class="title">IMDb</div>';
-    
-                ratings_div.appendChild(imdb_pie);
-            }
-    
-            
-            if (rt_score != null) {
-                rt_pie = document.createElement("div");
-                rt_pie.classList.add("pie");
-                rt_pie.classList.add("pie1");
-                rt_num = rt_score.slice(0, rt_score.indexOf("%"));
-    
-                if (rt_num < 50) {
-                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
-                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
-                } else {
-                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
-                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
-                }
-        
-                rt_pie.innerHTML =  '<div class="outer-right mask">' +
-                                    inner_right +
-                                    '</div>' +
-                                    '<div class="outer-left mask">' +
-                                    inner_left +
-                                    '</div>' +
-                                    '<div class="content">' +
-                                    '<span>' + rt_score + '</span>' +
-                                    '</div>' +
-                                    '<div class="title">Rotten Tomatoes</div>';
-        
-                ratings_div.appendChild(rt_pie);
-            }
-    
-            if (meta_score != null) {
-                meta_pie = document.createElement("div");
-                meta_pie.classList.add("pie");
-                meta_pie.classList.add("pie1");
-                meta_num = meta_score.slice(0, meta_score.indexOf("/"))
-            
-                if (meta_num < 50) {
-                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
-                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
-                } else {
-                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
-                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
-                }
-            
-                meta_pie.innerHTML = '<div class="outer-right mask">' +
-                                     inner_right +
-                                     '</div>' +
-                                     '<div class="outer-left mask">' +
-                                     inner_left +
-                                     '</div>' +
-                                     '<div class="content">' +
-                                     meta_num + '%' +
-                                     '</div>' +
-                                     '<div class="title">Metacritic</div>';
-            
-                ratings_div.appendChild(meta_pie);
-            }
-
-        } catch (error) {
-
-        }
-
-        if (imdb_score != null) {
-            movies[Object.keys(movies)[i]].imdb = imdb_score;
-        } else {
-            movies[Object.keys(movies)[i]].imdb = "0.0/10";
-        }
-
-        if (rt_score != null) {
-            movies[Object.keys(movies)[i]].rt = rt_score;
-        } else {
-            movies[Object.keys(movies)[i]].rt = "0%";
-        }
-
-        tmdb_pie = document.createElement("div");
-        tmdb_pie.classList.add("pie");
-        tmdb_pie.classList.add("pie1");
-        
-        if (score < 50) {
-            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(score / 100 * 4)] + '; transform: rotate(' + (score / 100 * 360) + 'deg);"></div>';
-            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(score / 100 * 4)] + ';"></div>';
-        } else {
-            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(score / 100 * 4)] + '; transform: rotate(' + (score / 100 * 360) + 'deg);"></div>';
-            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(score / 100 * 4)] + ';"></div>';
-        }
-
-        tmdb_pie.innerHTML = '<div class="outer-right mask">' +
-                            inner_right +
-                            '</div>' +
-                            '<div class="outer-left mask">' +
-                            inner_left +
-                            '</div>' +
-                            '<div class="content">' +
-                            '<span>' + score + '%</span>' +
-                            '</div>' +
-                            '<div class="title">TMDB</div>';      
-        
-        
-        ratings_div.appendChild(tmdb_pie);
 
         info_facts.innerHTML =  "<div style = 'margin-bottom: 15px;'>Duration: <span style = 'font-size: 16pt'>" + duration + "</span></div>" +
                                 "<div>Ratings:</div>";
@@ -325,77 +180,6 @@ async function getMovies() {
             back_link.href = "#" + movie.id;
             
         }
-        
-    
-        const response2 = await fetch(`${config.api_base_url}movie/${id}/watch/providers?api_key=${config.api_key}`)
-        const responseData2 = await response2.json();
-        let GB = responseData2.results.GB;
-    
-        let free = [];
-        let subs = [];
-        let ads = [];
-
-        movies[Object.keys(movies)[i]].platforms = [];
-
-        if (GB != null) {
-
-            if (GB.hasOwnProperty("free")) {
-                free = GB.free;
-            }
-            
-            if (GB.hasOwnProperty("flatrate")) {
-                subs = GB.flatrate;            
-            }
-
-            if (GB.hasOwnProperty("ads")) {
-                ads = GB.ads;      
-            }
-
-        }
-
-        document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 25px;'>Watch it on:</div>"
-
-        for (let i = 0; i < Object.keys(subs).length; i ++) {
-            service = subs[Object.keys(subs)[i]].provider_name;   
-            
-            logo = "https://image.tmdb.org/t/p/original" + subs[Object.keys(subs)[i]].logo_path;
-
-            if (services.includes(service)) {
-                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + service + "</div>";
-                movie.platforms.push(service);
-            }
-
-        }
-
-        for (let i = 0; i < Object.keys(free).length; i ++) {
-            free_service = free[Object.keys(free)[i]].provider_name; 
-            
-            logo = "https://image.tmdb.org/t/p/original" + free[Object.keys(free)[i]].logo_path;
-
-            if (free_services.includes(free_service)) {
-                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + free_service + "</div>";
-                movie.platforms.push(free_service);
-            }
-
-        }
-
-        for (let i = 0; i < Object.keys(ads).length; i ++) {
-            ad_service = ads[Object.keys(ads)[i]].provider_name; 
-            
-            logo = "https://image.tmdb.org/t/p/original" + ads[Object.keys(ads)[i]].logo_path;
-
-            if (ad_services.includes(ad_service)) {
-                document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + ad_service + "</div>";
-                movie.platforms.push(ad_service);
-            }
-
-        }
-
-
-        if (plex == true) {
-            document.getElementById(id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'https://image.tmdb.org/t/p/original/swMyOSh6p3ZOTr76yPV6EyQFTik.jpg'>Plex</div>";
-            movie.platforms.push("Plex")
-        }
 
         overview = document.createElement("div");
         overview.innerHTML = "<h2>Plot summary</h2>" + data.overview;
@@ -417,63 +201,301 @@ async function getMovies() {
             }
         }
 
-        info_div.appendChild(genre);
-
-        
-        const response3 = await fetch(`${config.api_base_url}movie/${id}/credits?api_key=${config.api_key}`)
-        const responseData3 = await response3.json();
-        let credits = responseData3;
-
-        director = [];
-        for (let j = 0; j < credits.crew.length; j ++) {
-            if (credits.crew[j].job == "Director") {
-                director.push(credits.crew[j].name)
-            }
-        }
-
-        directorDiv = document.createElement("div");
-        
-        if (director.length == 1) {
-            directorDiv.innerHTML = "<h2>Director</h2>" + director[0]
-        } else if (director.length > 1) {
-            directorDiv.innerHTML = "<h2>Directors</h2>"
-            for (let j = 0; j < director.length; j ++) {
-                directorDiv.innerHTML += director[j] + ", ";
-            }
-            directorDiv.innerHTML = directorDiv.innerHTML.slice(0, -2);
-        }
-
-        info_div.appendChild(directorDiv);
-
-        movie.cast = [];
-
-        starring = document.createElement("div");
-        starring.innerHTML = "<h2>Starring</h2>";
-        
-        actors = document.createElement("div");
-        actors.style.display = "flex";
-        actors.classList.add("row");
-        actors.id = data.id + "-cast";
-
-        for (let j = 0; j < Object.keys(credits.cast).length; j ++) {
-            if (credits.cast[j].profile_path != null) {
-                image = credits.cast[j].profile_path
-            } else {
-                image = data.poster_path
-            }
-            actors.innerHTML += "<div id = '" + data.id + "-" + credits.cast[j].id + "' class = 'col-4 col-lg-3 col-xl-2 cast'><img src = '" + config.image_base_url + image + "' class = 'img-fluid'><div style = 'font-size: 14pt; font-weight: bold;'>" + credits.cast[j].name + "</div><div>" + credits.cast[j].character + "</div></div>";
-            movie.cast.push(credits.cast[j].id)
-        }
-        
-        starring.appendChild(actors);
-        info_div.appendChild(starring);        
+        info_div.appendChild(genre);    
         
         if (i == Object.keys(movies).length - 1) {
             showing.innerHTML = "Displaying <strong>" + Object.keys(movies).length + "</strong> of <strong>" + Object.keys(movies).length + "</strong> movies";
             moviesDiv.style.display = "flex";
             document.getElementById("loading").style.display = "none";
             buttons.style.display = "flex";
+            
+
+            for (let j = 0; j < Object.keys(movies).length; j ++) {
+
+                let movie = movies[Object.keys(movies)[j]];
+
+                let ratings_div = document.getElementById(movie.id + "-ratings");
+
+                try {
+                    const response_i = await fetch("https://www.omdbapi.com/?i=" + movie.imdb_id + "&apikey=f10fad26")
+                    const responseData_i = await response_i.json();
+                    ratings = responseData_i;
+                    ratings = ratings.Ratings;
+
+                    
+                    for (let k = 0; k < ratings.length; k ++) {
+                        if (ratings[k].Source == "Internet Movie Database") {
+                            imdb_score = ratings[k].Value;
+                        }
+
+                        if (ratings[k].Source == "Rotten Tomatoes") {
+                            rt_score = ratings[k].Value;
+                        }
+
+                        if (ratings[k].Source == "Metacritic") {
+                            meta_score = ratings[k].Value;
+                        }
+                    }
+
+                    if (imdb_score != null) {
+                        imdb_pie = document.createElement("div");
+                        imdb_pie.classList.add("pie");
+                        imdb_pie.classList.add("pie1");
+                        imdb_num = imdb_score.slice(0, imdb_score.indexOf("/"))
+            
+                        if (imdb_num < 5) {
+                            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
+                            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
+                        } else {
+                            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + '; transform: rotate(' + (imdb_num / 10 * 360) + 'deg);"></div>';
+                            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(imdb_num / 10 * 4)] + ';"></div>';
+                        }
+            
+                        imdb_pie.innerHTML = '<div class="outer-right mask">' +
+                                            inner_right +
+                                            '</div>' +
+                                            '<div class="outer-left mask">' +
+                                            inner_left +
+                                            '</div>' +
+                                            '<div class="content">' +
+                                            '<span style = "font-size: 30px">' + imdb_score + '</span>' +
+                                            '</div>' +
+                                            '<div class="title">IMDb</div>';
+            
+                        ratings_div.appendChild(imdb_pie);
+                    }
+            
+                    
+                    if (rt_score != null) {
+                        rt_pie = document.createElement("div");
+                        rt_pie.classList.add("pie");
+                        rt_pie.classList.add("pie1");
+                        rt_num = rt_score.slice(0, rt_score.indexOf("%"));
+            
+                        if (rt_num < 50) {
+                            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
+                            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
+                        } else {
+                            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + '; transform: rotate(' + (rt_num / 100 * 360) + 'deg);"></div>';
+                            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(rt_num / 100 * 4)] + ';"></div>';
+                        }
+                
+                        rt_pie.innerHTML =  '<div class="outer-right mask">' +
+                                            inner_right +
+                                            '</div>' +
+                                            '<div class="outer-left mask">' +
+                                            inner_left +
+                                            '</div>' +
+                                            '<div class="content">' +
+                                            '<span>' + rt_score + '</span>' +
+                                            '</div>' +
+                                            '<div class="title">Rotten Tomatoes</div>';
+                
+                        ratings_div.appendChild(rt_pie);
+                    }
+            
+                    if (meta_score != null) {
+                        meta_pie = document.createElement("div");
+                        meta_pie.classList.add("pie");
+                        meta_pie.classList.add("pie1");
+                        meta_num = meta_score.slice(0, meta_score.indexOf("/"))
+                    
+                        if (meta_num < 50) {
+                            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
+                            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
+                        } else {
+                            inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + '; transform: rotate(' + (meta_num / 100 * 360) + 'deg);"></div>';
+                            inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(meta_num / 100 * 4)] + ';"></div>';
+                        }
+                    
+                        meta_pie.innerHTML = '<div class="outer-right mask">' +
+                                            inner_right +
+                                            '</div>' +
+                                            '<div class="outer-left mask">' +
+                                            inner_left +
+                                            '</div>' +
+                                            '<div class="content">' +
+                                            meta_num + '%' +
+                                            '</div>' +
+                                            '<div class="title">Metacritic</div>';
+                    
+                        ratings_div.appendChild(meta_pie);
+                    }
+
+                } catch (error) {
+
+                }
+
+                if (imdb_score != null) {
+                    movies[Object.keys(movies)[j]].imdb = imdb_score;
+                } else {
+                    movies[Object.keys(movies)[j]].imdb = "0.0/10";
+                }
+        
+                if (rt_score != null) {
+                    movies[Object.keys(movies)[j]].rt = rt_score;
+                } else {
+                    movies[Object.keys(movies)[j]].rt = "0%";
+                }
+        
+                tmdb_pie = document.createElement("div");
+                tmdb_pie.classList.add("pie");
+                tmdb_pie.classList.add("pie1");
+                
+                if (score < 50) {
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(score / 100 * 4)] + '; transform: rotate(' + (score / 100 * 360) + 'deg);"></div>';
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(score / 100 * 4)] + ';"></div>';
+                } else {
+                    inner_left = '<div class="inner-left" style = "background-color:' + colours[Math.round(score / 100 * 4)] + '; transform: rotate(' + (score / 100 * 360) + 'deg);"></div>';
+                    inner_right = '<div class="inner-right" style = "background-color:' + colours[Math.round(score / 100 * 4)] + ';"></div>';
+                }
+        
+                tmdb_pie.innerHTML = '<div class="outer-right mask">' +
+                                    inner_right +
+                                    '</div>' +
+                                    '<div class="outer-left mask">' +
+                                    inner_left +
+                                    '</div>' +
+                                    '<div class="content">' +
+                                    '<span>' + score + '%</span>' +
+                                    '</div>' +
+                                    '<div class="title">TMDB</div>';      
+                
+                
+                ratings_div.appendChild(tmdb_pie);
+
+                const response2 = await fetch(`${config.api_base_url}movie/${movie.id}/watch/providers?api_key=${config.api_key}`)
+                const responseData2 = await response2.json();
+                let GB = responseData2.results.GB;
+            
+                let free = [];
+                let subs = [];
+                let ads = [];
+        
+                movies[Object.keys(movies)[j]].platforms = [];
+        
+                if (GB != null) {
+        
+                    if (GB.hasOwnProperty("free")) {
+                        free = GB.free;
+                    }
+                    
+                    if (GB.hasOwnProperty("flatrate")) {
+                        subs = GB.flatrate;            
+                    }
+        
+                    if (GB.hasOwnProperty("ads")) {
+                        ads = GB.ads;      
+                    }
+        
+                }
+        
+                document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 25px;'>Watch it on:</div>"
+        
+                for (let k = 0; k < Object.keys(subs).length; k ++) {
+                    service = subs[Object.keys(subs)[k]].provider_name;   
+                    
+                    logo = "https://image.tmdb.org/t/p/original" + subs[Object.keys(subs)[k]].logo_path;
+        
+                    if (services.includes(service)) {
+                        document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + service + "</div>";
+                        movie.platforms.push(service);
+                    }
+        
+                }
+        
+                for (let k = 0; k < Object.keys(free).length; k ++) {
+                    free_service = free[Object.keys(free)[k]].provider_name; 
+                    
+                    logo = "https://image.tmdb.org/t/p/original" + free[Object.keys(free)[k]].logo_path;
+        
+                    if (free_services.includes(free_service)) {
+                        document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + free_service + "</div>";
+                        movie.platforms.push(free_service);
+                    }
+        
+                }
+        
+                for (let k = 0; k < Object.keys(ads).length; k ++) {
+                    ad_service = ads[Object.keys(ads)[k]].provider_name; 
+                    
+                    logo = "https://image.tmdb.org/t/p/original" + ads[Object.keys(ads)[k]].logo_path;
+        
+                    if (ad_services.includes(ad_service)) {
+                        document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = '" + logo + "'>" + ad_service + "</div>";
+                        movie.platforms.push(ad_service);
+                    }
+        
+                }
+        
+        
+                if (movie.plex == true) {
+                    document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div><img class = 'tv-logo' src = 'https://image.tmdb.org/t/p/original/swMyOSh6p3ZOTr76yPV6EyQFTik.jpg'>Plex</div>";
+                    movie.platforms.push("Plex")
+                }
+
+                if (j == Object.keys(movies).length - 1) {
+
+                    for (let k = 0; k < Object.keys(movies).length; k ++) {
+
+                        let movie = movies[Object.keys(movies)[k]];
+
+                        const response3 = await fetch(`${config.api_base_url}movie/${movie.id}/credits?api_key=${config.api_key}`)
+                        const responseData3 = await response3.json();
+                        let credits = responseData3;
+
+                        director = [];
+                        for (let l = 0; k < credits.crew.length; k ++) {
+                            if (credits.crew[l].job == "Director") {
+                                director.push(credits.crew[l].name)
+                            }
+                        }
+
+                        directorDiv = document.createElement("div");
+                        
+                        if (director.length == 1) {
+                            directorDiv.innerHTML = "<h2>Director</h2>" + director[0]
+                        } else if (director.length > 1) {
+                            directorDiv.innerHTML = "<h2>Directors</h2>"
+                            for (let l = 0; l < director.length; l ++) {
+                                directorDiv.innerHTML += director[l] + ", ";
+                            }
+                            directorDiv.innerHTML = directorDiv.innerHTML.slice(0, -2);
+                        }
+
+                        document.getElementById(movie.id + "-info").appendChild(directorDiv);
+
+                        movie.cast = [];
+
+                        starring = document.createElement("div");
+                        starring.innerHTML = "<h2>Starring</h2>";
+                        
+                        actors = document.createElement("div");
+                        actors.style.display = "flex";
+                        actors.classList.add("row");
+                        actors.id = data.id + "-cast";
+
+                        for (let l = 0; l < Object.keys(credits.cast).length; l ++) {
+                            if (credits.cast[l].profile_path != null) {
+                                image = credits.cast[l].profile_path
+                            } else {
+                                image = movie.poster_path
+                            }
+                            actors.innerHTML += "<div id = '" + data.id + "-" + credits.cast[l].id + "' class = 'col-4 col-lg-3 col-xl-2 cast'><img src = '" + config.image_base_url + image + "' class = 'img-fluid'><div style = 'font-size: 14pt; font-weight: bold;'>" + credits.cast[l].name + "</div><div>" + credits.cast[l].character + "</div></div>";
+                            movie.cast.push(credits.cast[l].id)
+                        }
+                        
+                        starring.appendChild(actors);
+                        document.getElementById(movie.id + "-info").appendChild(starring);  
+
+                    }
+
+                }
+
+            }
+
             castLinks();
+
         }
 
         load_pct = (i + 1) / Object.keys(movies).length * 100;
@@ -517,35 +539,6 @@ function sortObject(o) {
  }
 
 function castLinks () {
-
-    for (let i = 0; i < Object.keys(movies).length; i ++) {
-
-        movie = movies[Object.keys(movies)[i]];
-
-        for (let j = 3; j < movie.cast.length; j ++) {
-
-            actor = movie.cast[j];
-
-            let keep_actor = false;
-
-            for (let k = 0; k < Object.keys(movies).length; k ++) {
-
-                movie_2 = movies[Object.keys(movies)[k]];
-
-                if (movie_2.cast.includes(actor) & movie_2.id != movie.id) {
-                    keep_actor = true;
-                    break;
-                }
-
-            }
-
-            if (keep_actor == false) {
-                document.getElementById(movie.id + "-cast").removeChild(document.getElementById(movie.id + "-" + actor))
-            }
-
-        }
-
-    }
 
     castDivs = document.getElementsByClassName("cast");
 
