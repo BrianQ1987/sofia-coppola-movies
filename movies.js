@@ -758,7 +758,7 @@ let movies = {
     "My Favourite Wife": {
         id: 41463,
         plex: false,
-        watched: [],
+        watched: [2023],
         added: 2023
     }
 }
