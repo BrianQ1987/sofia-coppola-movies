@@ -661,7 +661,7 @@ let movies = {
     },
     "What Happens Later": {
         id: 970948,
-        plex: false,
+        plex: true,
         watched: [],
         added: 2023
     },
@@ -757,6 +757,12 @@ let movies = {
     },
     "My Favourite Wife": {
         id: 41463,
+        plex: false,
+        watched: [2023],
+        added: 2023
+    },
+    "The Nightmare Before Christmas":{
+        id: 9479,
         plex: false,
         watched: [2023],
         added: 2023
