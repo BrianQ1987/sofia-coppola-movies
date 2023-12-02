@@ -110,7 +110,7 @@ let movies = {
     "Christmas Holiday": {
         id: 26530,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2022
     },
     "Christmas in Connecticut": {
