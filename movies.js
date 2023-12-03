@@ -512,7 +512,7 @@ let movies = {
     "Silent Night (2021)": {
         id: 664574,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Silent Night (2023)": {
