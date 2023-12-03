@@ -260,7 +260,7 @@ let movies = {
     "How the Grinch Stole Christmas (2000)": {
         id: 8871,
         plex: true,
-        watched: [2020, 2021],
+        watched: [2020, 2021, 2023],
         added: 2020
     },
     "In the Good Old Summertime": {
@@ -283,7 +283,7 @@ let movies = {
     },
     "It's a Wonderful Knife": {
         id: 1113278,
-        plex: false,
+        plex: true,
         watched: [],
         added: 2023
     },
@@ -703,7 +703,7 @@ let movies = {
     },
     "The Holdovers": {
         id: 840430,
-        plex: false,
+        plex: true,
         watched: [],
         added: 2023
     },
