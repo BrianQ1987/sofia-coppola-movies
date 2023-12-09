@@ -752,7 +752,7 @@ let movies = {
     "Your Christmas or Mine 2": {
         id: 1176139,
         plex: false,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "My Favourite Wife": {
