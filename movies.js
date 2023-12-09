@@ -170,7 +170,7 @@ let movies = {
     "Elf": {
         id: 10719,
         plex: true,
-        watched: [2020, 2021, 2022],
+        watched: [2020, 2021, 2022, 2023],
         added: 2020
     },
     "Emmet Otter's Jugband Christmas": {
