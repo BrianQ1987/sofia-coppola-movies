@@ -74,7 +74,7 @@ let movies = {
     "Bell, Book and Candle": {
         id: 2006,
         plex: true,
-        watched: [2022],
+        watched: [2022, 2023],
         added: 2022
     },
     "Best. Christmas. Ever!": {
