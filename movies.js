@@ -766,5 +766,11 @@ let movies = {
         plex: false,
         watched: [2023],
         added: 2023
+    },
+    "The Year Without a Santa Claus":{
+        id: 13397,
+        plex: true,
+        watched: [],
+        added: 2023
     }
 }
