@@ -80,7 +80,7 @@ let movies = {
     "Best. Christmas. Ever!": {
         id: 987490,
         plex: false,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Black Christmas (1974)": {
@@ -704,7 +704,7 @@ let movies = {
     "The Holdovers": {
         id: 840430,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Tokyo Godfathers": {
