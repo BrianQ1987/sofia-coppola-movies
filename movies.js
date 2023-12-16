@@ -722,7 +722,7 @@ let movies = {
     "Love Actually": {
         id: 508,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Comfort and Joy": {
