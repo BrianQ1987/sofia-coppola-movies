@@ -410,7 +410,7 @@ let movies = {
     "Miracle on 34th Street (1959)": {
         id: 765873,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Miracle on 34th Street (1973)": {
@@ -470,7 +470,7 @@ let movies = {
     "Pluto's Christmas Tree": {
         id: 61080,
         plex: false,
-        watched: [2020, 2022],
+        watched: [2020, 2022, 2023],
         added: 2020
     },
     "Rare Exports: A Christmas Tale": {
