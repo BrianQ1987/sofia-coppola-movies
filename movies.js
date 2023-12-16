@@ -56,7 +56,7 @@ let movies = {
     "All I Want For Christmas": {
         id: 13644,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2021
     },
     "Anna and the Apocalypse ": {
@@ -284,7 +284,7 @@ let movies = {
     "It's a Wonderful Knife": {
         id: 1113278,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "It's a Wonderful Life": {
@@ -770,7 +770,7 @@ let movies = {
     "The Year Without a Santa Claus":{
         id: 13397,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     }
 }
