@@ -26,7 +26,7 @@ let movies = {
     "A Christmas Story": {
         id: 850,
         plex: true,
-        watched: [2020, 2022],
+        watched: [2020, 2022, 2023],
         added: 2020
     },
     "A Christmas Story Christmas": {
@@ -662,7 +662,7 @@ let movies = {
     "What Happens Later": {
         id: 970948,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "While You Were Sleeping ": {
@@ -692,7 +692,7 @@ let movies = {
     "Fanny and Alexander": {
         id: 5961,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Red One": {
@@ -745,7 +745,7 @@ let movies = {
     },
     "Family Switch": {
         id: 798021,
-        plex: false,
+        plex: true,
         watched: [],
         added: 2023
     },
