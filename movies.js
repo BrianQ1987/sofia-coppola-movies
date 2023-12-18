@@ -14,7 +14,7 @@ let movies = {
     "A Charlie Brown Christmas": {
         id: 13187,
         plex: false,
-        watched: [2020, 2022],
+        watched: [2020, 2022, 2023],
         added: 2020
     },
     "Scrooge (1951)": {
