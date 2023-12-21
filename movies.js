@@ -230,7 +230,7 @@ let movies = {
     "Home Alone": {
         id: 771,
         plex: false,
-        watched: [2020, 2021, 2022],
+        watched: [2020, 2021, 2022, 2023],
         added: 2020
     },
     "Home Alone 2: Lost in New York": {
@@ -746,7 +746,7 @@ let movies = {
     "Family Switch": {
         id: 798021,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "Your Christmas or Mine 2": {
@@ -761,16 +761,28 @@ let movies = {
         watched: [2023],
         added: 2023
     },
-    "The Nightmare Before Christmas":{
+    "The Nightmare Before Christmas": {
         id: 9479,
         plex: false,
         watched: [2023],
         added: 2023
     },
-    "The Year Without a Santa Claus":{
+    "The Year Without a Santa Claus": {
         id: 13397,
         plex: true,
         watched: [2023],
+        added: 2023
+    },
+    "Bad Santa": {
+        id: 10147,
+        plex: true,
+        watched: [],
+        added: 2023
+    },
+    "The Heist Before Christmas": {
+        id: 656995,
+        plex: false,
+        watched: [],
         added: 2023
     }
 }
