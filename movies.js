@@ -476,13 +476,13 @@ let movies = {
     "Rare Exports: A Christmas Tale": {
         id: 48395,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2022
     },
     "Remember The Night": {
         id: 29617,
         plex: true,
-        watched: [2021],
+        watched: [2021, 2023],
         added: 2021
     },
     "Santa Claus The Movie ": {
@@ -572,7 +572,7 @@ let movies = {
     "The Great Santa Claus Switch": {
         id: 210061,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2021
     },
     "The Holiday": {
@@ -776,7 +776,7 @@ let movies = {
     "Bad Santa": {
         id: 10147,
         plex: true,
-        watched: [],
+        watched: [2023],
         added: 2023
     },
     "The Heist Before Christmas": {
