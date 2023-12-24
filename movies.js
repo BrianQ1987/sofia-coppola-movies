@@ -38,7 +38,7 @@ let movies = {
     "A Muppet Family Christmas": {
         id: 13247,
         plex: true,
-        watched: [2022],
+        watched: [2022, 2023],
         added: 2022
     },
     "A Muppets Christmas: Letters To Santa": {
@@ -422,7 +422,7 @@ let movies = {
     "Miracle on 34th Street (1994)": {
         id: 10510,
         plex: true,
-        watched: [2020, 2021, 2022],
+        watched: [2020, 2021, 2022, 2023],
         added: 2020
     },
     "Mr Willowby's Christmas Tree": {
