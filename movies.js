@@ -398,7 +398,7 @@ let movies = {
     "Miracle on 34th Street (1947)": {
         id: 11881,
         plex: true,
-        watched: [2020, 2021, 2022],
+        watched: [2020, 2021, 2022, 2023],
         added: 2020
     },
     "The Miracle on 34th Street (1955)": {
