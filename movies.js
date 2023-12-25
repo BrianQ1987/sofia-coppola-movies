@@ -236,7 +236,7 @@ let movies = {
     "Home Alone 2: Lost in New York": {
         id: 772,
         plex: false,
-        watched: [2020, 2021, 2022],
+        watched: [2020, 2021, 2022, 2023],
         added: 2020
     },
     "Home for the Holidays": {
@@ -290,7 +290,7 @@ let movies = {
     "It's a Wonderful Life": {
         id: 1585,
         plex: true,
-        watched: [2020, 2021, 2022],
+        watched: [2020, 2021, 2022, 2023],
         added: 2020
     },
     "Jingle All The Way": {
