@@ -158,7 +158,7 @@ let movies = {
     "Die Hard": {
         id: 562,
         plex: false,
-        watched: [2020, 2021],
+        watched: [2020, 2021, 2023],
         added: 2020
     },
     "The Grinch (2018)": {
@@ -356,7 +356,7 @@ let movies = {
     "Little Women (1949)": {
         id: 43436,
         plex: true,
-        watched: [2020],
+        watched: [2020, 2023],
         added: 2020
     },
     "Little Women (1994)": {
@@ -380,7 +380,7 @@ let movies = {
     "Meet Me in St Louis": {
         id: 909,
         plex: true,
-        watched: [2020, 2021, 2022],
+        watched: [2020, 2021, 2022, 2023],
         added: 2020
     },
     "Mickey's Christmas Carol": {
@@ -530,7 +530,7 @@ let movies = {
     "Spirited": {
         id: 632856,
         plex: false,
-        watched: [2022],
+        watched: [2022, 2023],
         added: 2022
     },
     "Surviving Christmas": {
@@ -608,7 +608,7 @@ let movies = {
     "The Polar Express": {
         id: 5255,
         plex: true,
-        watched: [2020],
+        watched: [],
         added: 2020
     },
     "The Preacher's Wife": {
