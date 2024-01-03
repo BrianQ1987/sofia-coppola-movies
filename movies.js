@@ -152,7 +152,7 @@ let movies = {
     "Deck the Halls": {
         id: 9969,
         plex: false,
-        watched: [2021],
+        watched: [2021, 2023],
         added: 2021
     },
     "Die Hard": {
