@@ -27,6 +27,10 @@ let movies = {
         id: 96936,
         plex: false
     },
+    "A Very Murray Christmas": {
+        id: 364067,
+        plex: false
+    },
     "The Beguiled": {
         id: 399019,
         plex: false

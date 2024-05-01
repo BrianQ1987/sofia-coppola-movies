@@ -417,7 +417,7 @@ async function getMovies() {
                     movie.platforms.push("Plex")
                 }
 
-                document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<a href = 'https://imdb.com/title/" + data.imdb_id + "' target='_blank' style = 'color: white; margin-top: 15px'>View on <img src = 'https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg' width = 50px></a>"
+                document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<a href = 'https://imdb.com/title/" + movies[Object.keys(movies)[j]].imdb_id + "' target='_blank' style = 'color: white; margin-top: 15px'>View on <img src = 'https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg' width = 50px></a>"
 
                 const response3 = await fetch(`${config.api_base_url}movie/${movie.id}/credits?api_key=${config.api_key}`)
                 const responseData3 = await response3.json();
@@ -510,39 +510,6 @@ async function getMovies() {
     }
 
 }
-
-function sortObject(o) {
-    var sorted = {},
-    key, a = [];
- 
-    for (key in o) {
-          if (o.hasOwnProperty(key)) {
-             if (key.indexOf("A ") == 0) {
-                a.push(key.slice(1).trim());
-             } else if (key.indexOf("The ") == 0) {
-                a.push(key.slice(3).trim());
-             } else {
-                a.push(key)
-             }
-          }
-    }
- 
-    a.sort();
- 
-    for (key = 0; key < a.length; key++) {
-
-        if (o.hasOwnProperty(a[key])) {
-            sorted[a[key]] = o[a[key]];
-        } else if (o.hasOwnProperty(`A ${a[key]}`)) {
-            sorted[a[key]] = o[`A ${a[key]}`]
-        } else if (o.hasOwnProperty(`The ${a[key]}`)) {
-            sorted[a[key]] = o[`The ${a[key]}`]
-        }        
-          
-    }
-    
-    return sorted;
- }
 
 function castLinks () {
 
