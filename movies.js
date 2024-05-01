@@ -5,7 +5,7 @@ let movies = {
     },
     "Lick the Star": {
         id: 92657,
-        plex: false
+        plex: true
     },
     "Virgin Suicides": {
         id: 1443,
@@ -13,19 +13,19 @@ let movies = {
     },
     "Lost in Translation": {
         id: 153,
-        plex: false
+        plex: true
     },
     "Marie Antoinette": {
         id: 1887,
-        plex: false
+        plex: true
     },
     "Somewhere": {
         id: 39210,
-        plex: false
+        plex: true
     },
     "The Bling Ring": {
         id: 96936,
-        plex: false
+        plex: true
     },
     "A Very Murray Christmas": {
         id: 364067,
@@ -33,7 +33,7 @@ let movies = {
     },
     "The Beguiled": {
         id: 399019,
-        plex: false
+        plex: true
     },
     "On the Rocks": {
         id: 575417,
