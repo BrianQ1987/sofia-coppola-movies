@@ -5,27 +5,14 @@ showing = document.getElementById("showing");
 back_btn = document.getElementById("back-btn");
 back_link = document.getElementById("back-link");
 sorting = document.getElementById("sorting");
-can = document.getElementById("can");
 sort_menu = document.getElementById("sort-menu");
 filter_menu = document.getElementById("filter-menu");
 
-services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus", "Channel 4"];
+services = ["Amazon Prime Video", "Netflix", "ITVX", "Disney Plus", "Apple TV Plus", "Channel 4", "Paramount Plus"];
 free_services = ["BBC iPlayer"];
 ad_services = ["My5", "Freevee"];
 
-let year_added = [];
-    let current_year = 2020;
-for (let i = 0; i < Object.keys(movies).length; i ++) {
-
-    let movie = movies[Object.keys(movies)[i]];
-
-    year_added.push(movie.added);
-
-}
-
-current_year = Math.max(...year_added);
-
-movies = sortObject(movies);
+let current_year = 2024;
 
 async function getMovies() {
 
@@ -52,16 +39,26 @@ async function getMovies() {
         poster_div.classList.add("p-1");
         poster_div.classList.add("poster")
         poster_div.id = id;
-        poster_div.innerHTML = `<a href = "#top"><img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img></a>`;
+        if (data.poster_path == null) {
+            poster_div.innerHTML = data.title;
+            poster_div.style.backgroundColor = "#ee1d85";
+            poster_div.style.fontSize = "32px";
 
-        moviesDiv.appendChild(poster_div);
-
-        title_div = document.createElement("div");
-        title_div.classList.add("poster-title");
-        title_div.id = id + "-title";
-        title_div.innerHTML = data.title;
-        title_div.style.display = "none";
-        poster_div.appendChild(title_div);
+            poster_div.onmouseover = function () {
+                document.getElementById(id).style.filter = "opacity(30%)";
+            }
+    
+            poster_div.onmouseout = function () {
+                document.getElementById(id).style.filter = "opacity(100%)";;
+            }
+        } else {
+            poster_div.innerHTML = `<a href = "#top"><img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img></a>`;
+            title_div = document.createElement("div");
+            title_div.classList.add("poster-title");
+            title_div.id = id + "-title";
+            title_div.innerHTML = data.title;
+            title_div.style.display = "none";
+            poster_div.appendChild(title_div);
 
         poster_div.onmouseover = function() {
             document.getElementById(id + "-title").style.display = "flex";
@@ -78,6 +75,11 @@ async function getMovies() {
         title_div.onmouseout = function () {
             document.getElementById(id).getElementsByTagName("img")[0].removeAttribute("style");
         }
+        }
+
+        moviesDiv.appendChild(poster_div);
+
+        
 
         info_div = document.createElement("div");
         info_div.id = `${id}-info`;
@@ -104,7 +106,16 @@ async function getMovies() {
         info_poster.classList.add("col-lg-5");
         info_poster.classList.add("col-xl-5");
 
-        info_poster.innerHTML = `<img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img>`
+        if (data.poster_path == null) {
+
+            info_poster.innerHTML = data.title;
+            info_poster.style.backgroundColor = "#ee1d85";
+            info_poster.style.fontSize = "32px";
+
+        } else {
+
+            info_poster.innerHTML = `<img src="${config.image_base_url + data.poster_path}" class="img-fluid" ></img>`
+        }
 
         info_row.appendChild(info_poster);
 
@@ -135,34 +146,6 @@ async function getMovies() {
                                 "<div>Ratings:</div>";
 
         info_facts.appendChild(ratings_div);
-
-        added_div = document.createElement("div");
-        added_div.classList.add("row");
-        added_div.style.marginTop = "10px";
-        added_div.style.marginLeft = "0px";
-        added_div.innerHTML = "<div>Added: <span class = 'added-year'>" + movie.added + "</span></div>";
-        if (movie.added == current_year) {
-            added_div.innerHTML += "<div class = 'new-entry'>New</div>"
-        }
-
-        info_facts.appendChild(added_div);
-
-        watched_div = document.createElement("div");
-        watched_div.style.marginTop = "15px";
-
-        watched_div.innerHTML = "<div>Watched:</div>";
-
-        for (let i = movie.added; i <= current_year; i ++) {
-            if (movie.watched.includes(i)) {
-                emoji = "🎄"
-            } else {
-                emoji = "❌"
-            }
-            watched_div.innerHTML += "<div class = 'row' style = 'margin-left: 15px; font-size: 16pt'><div style = 'width: 52px; margin-left: 5px'>" + i + ":</div><div style = 'width: 30px; text-align: center;'>" + emoji + "</div></div>"
-        }
-
-        info_facts.appendChild(watched_div);
-
 
         info_row.appendChild(info_facts);
 
@@ -393,7 +376,7 @@ async function getMovies() {
                 document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<div style = 'margin-top: 25px;'>Watch it on:</div>"
         
                 for (let k = 0; k < Object.keys(subs).length; k ++) {
-                    service = subs[Object.keys(subs)[k]].provider_name;   
+                    service = subs[Object.keys(subs)[k]].provider_name;
                     
                     logo = "https://image.tmdb.org/t/p/original" + subs[Object.keys(subs)[k]].logo_path;
         
@@ -434,6 +417,8 @@ async function getMovies() {
                     movie.platforms.push("Plex")
                 }
 
+                document.getElementById(movie.id + "-info").getElementsByClassName("info-facts")[0].innerHTML += "<a href = 'https://imdb.com/title/" + data.imdb_id + "' target='_blank' style = 'color: white; margin-top: 15px'>View on <img src = 'https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg' width = 50px></a>"
+
                 const response3 = await fetch(`${config.api_base_url}movie/${movie.id}/credits?api_key=${config.api_key}`)
                 const responseData3 = await response3.json();
                 let credits = responseData3;
@@ -458,6 +443,27 @@ async function getMovies() {
                 }
 
                 document.getElementById(movie.id + "-info").appendChild(directorDiv);
+
+                writer = [];
+                for (let k = 0; k < credits.crew.length; k ++) {
+                    if (credits.crew[k].job == "Writer"| credits.crew[k].job == "Screenplay") {
+                        writer.push(credits.crew[k].name)
+                    }
+                }
+
+                writerDiv = document.createElement("div");
+                
+                if (writer.length == 1) {
+                    writerDiv.innerHTML = "<h2>Writer</h2>" + writer[0]
+                } else if (writer.length > 1) {
+                    writerDiv.innerHTML = "<h2>Writers</h2>"
+                    for (let k = 0; k < writer.length; k ++) {
+                        writerDiv.innerHTML += writer[k] + ", ";
+                    }
+                    writerDiv.innerHTML = writerDiv.innerHTML.slice(0, -2);
+                }
+
+                document.getElementById(movie.id + "-info").appendChild(writerDiv);
 
                 movie.cast = [];
 
@@ -500,9 +506,6 @@ async function getMovies() {
             castLinks();            
 
         }
-
-        load_pct = (i + 1) / Object.keys(movies).length * 100;
-        can.style.clipPath = "polygon(0% 0%, " + load_pct + "% 0%, " + load_pct + "% 100%, 0% 100%)"
 
     }
 

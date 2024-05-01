@@ -12,16 +12,16 @@
 
     <script src="https://kit.fontawesome.com/6f5dc8849c.js" crossorigin="anonymous"></script>
 
-    <title>Christmas Movies</title>
-    <link rel="icon" type="image/x-icon" href="img/movies.png">
-    <link rel="apple-touch-icon" href="img/movies-apple.png">
+    <title>Sofia Coppola Movies</title>
+    <link rel="icon" type="image/x-icon" href="img/sofia-icon.png">
+    <link rel="apple-touch-icon" href="img/sofia-icon.jpg">
 
     <script src = "config.js"></script>
     <script src="movies.js"></script>
   </head>
   <body class="bg-dark text-white">
       <div id = "top" class="p-4">
-          <h1>Christmas Movies</h1>
+          <h1>Sofia Coppola Movies</h1>
           <div id = "buttons" class = "row">
             <div id = "filter-btn"><i class="fa-solid fa-filter"></i> Filter</div>
             <div id = "sort-btn"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort by</div>
@@ -32,18 +32,12 @@
             <div id = "filter-show-all" class = "menu-item clicked">Show all</div>
             <div id = "filter-duration" class = "menu-item">Duration</div>
             <div id = "filter-release" class = "menu-item">Release date</div>
-            <div id = "filter-added" class = "menu-item">Added</div>
-            <div id = "filter-watched" class = "menu-item">Watched</div>
-            <div id = "filter-last" class = "menu-item">Last watched</div>
-            <div id = "filter-no-watch" class = "menu-item">Never watched</div>
             <div id = "filter-platform" class = "menu-item">Platform</div>
           </div>
           <div id = "sort-menu">
             <div id = "sort-az" class = "menu-item clicked">A-Z</div>
             <div id = "sort-duration" class = "menu-item">Duration</div>
             <div id = "sort-release" class = "menu-item">Release date</div>
-            <div id = "sort-added" class = "menu-item">Added</div>
-            <div id = "sort-watched" class = "menu-item">Last watched</div>
             <div id = "sort-imdb" class = "menu-item">IMDb Score</div>
             <div id = "sort-rt" class = "menu-item">Rotten Tomatoes Score</div>
           </div>
@@ -51,12 +45,11 @@
           <div><span id = "showing"></span><span id = "sorting"></span></div>
           <div id="movies" class="row no-gutters"></div>
           <div id = "loading">
-            <img src = "img/home-alone-pepsi.gif">
-            <img id = "can" src = "img/pepsi.png">
+            <img src = "img/marie-antoinette.gif">
             <div><h3>Loading...</h3></div>
           </div>
           <div id = "movie-info">
-            <div id = "back-btn"><i class="fa-solid fa-sleigh"></i><a id = "back-link"> Back</a></div>
+            <div id = "back-btn"><i class="fa-solid fa-clapperboard"></i><a id = "back-link"> Back</a></div>
           </div>
       </div>
 
