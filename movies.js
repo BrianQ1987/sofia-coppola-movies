@@ -41,6 +41,6 @@ let movies = {
     },
     "Priscilla": {
         id: 1020006,
-        plex: false
+        plex: true
     }
 }
